@@ -11,9 +11,15 @@ main {
     flex: 1;
 }
 
+<<<<<<< HEAD
 .sidebar,
 .top-row {
     background: linear-gradient(180deg, #000000, #808080);
+    ======= .sidebar
+
+{
+    background-image: linear-gradient(180deg, #969593 10%, #e6e6e6 70%);
+    >>>>>>> f9e22c950d9171043a232f07a97e3cfad437dbd1
 }
 
 .top-row {
