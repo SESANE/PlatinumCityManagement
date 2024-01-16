@@ -2,41 +2,56 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-image: url('https://onecms-res.cloudinary.com/image/upload/s--ZuzK41fi--/f_auto,q_auto/c_fill,g_auto,h_622,w_830/v1/tdy-migration/12552962-generic-cinema-hall-pic_0.jpg?itok=BAPOrsfU');
+    background-size: cover;
+    background-position: center;
 }
 
 main {
     flex: 1;
 }
 
-.sidebar {
+<<<<<<< HEAD
+.sidebar,
+.top-row {
+    background: linear-gradient(180deg, #000000, #808080);
+    ======= .sidebar
+
+{
     background-image: linear-gradient(180deg, #969593 10%, #e6e6e6 70%);
+    >>>>>>> f9e22c950d9171043a232f07a97e3cfad437dbd1
 }
-
-
 
 .top-row {
-    background-color: #969593;
     border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
-    height: 3.5rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding-left: 2rem;
+    padding-right: 1.5rem;
+    background: linear-gradient(180deg, #000000, #808080);
+    border-bottom: 1px solid #d6d5d5;
+    height: 3.5rem;
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
+    .top-row ::deep a,
+    .top-row ::deep .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
         text-decoration: none;
+        font-weight: bold;
+        color: white;
     }
 
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        text-decoration: underline;
-    }
+        .top-row ::deep a:hover,
+        .top-row ::deep .btn-link:hover {
+            text-decoration: underline;
+        }
 
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .top-row ::deep a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
@@ -47,7 +62,8 @@ main {
         justify-content: space-between;
     }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
+    .top-row ::deep a,
+    .top-row ::deep .btn-link {
         margin-left: 0;
     }
 }
@@ -65,16 +81,16 @@ main {
     }
 
     .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
+        .top-row.auth ::deep a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+        }
 
     .top-row, article {
         padding-left: 2rem !important;
