@@ -1,49 +1,23 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Platinum City</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
+        <img class="ogo" src="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-PC-Logo-Design-by-Greenlines-Studios-580x386.jpg" alt="logo">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                Home
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="movies">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Movies
+                Movies
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="cinemas">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Cinemas
+                Cinemas
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="checkbooking">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Book Now
+                Book Now
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="contactus">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Contact Us
+                Contact Us
             </NavLink>
+        <div class="auth-links">
+            <LoginDisplay />
         </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+        </div>
+    </div>
