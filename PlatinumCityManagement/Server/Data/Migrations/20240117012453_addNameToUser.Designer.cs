@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlatinumCityManagement.Server.Data;
 
@@ -11,9 +12,11 @@ using PlatinumCityManagement.Server.Data;
 namespace PlatinumCityManagement.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240117012453_addNameToUser")]
+    partial class addNameToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,121 +374,6 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.CinemaBranch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HallQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CinemaBranches");
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Hall", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CinemaBranchId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ScreeningQuality")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("SeatStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CinemaBranchId");
-
-                    b.ToTable("Halls");
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Screening", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("HallId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Showtime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HallId");
-
-                    b.ToTable("Screenings");
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Staff", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CinemaBranchId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ContactNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PerformanceRating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CinemaBranchId");
-
-                    b.ToTable("Staffs");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -535,33 +423,6 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Hall", b =>
-                {
-                    b.HasOne("PlatinumCityManagement.Shared.Domain.CinemaBranch", "CinemaBranch")
-                        .WithMany()
-                        .HasForeignKey("CinemaBranchId");
-
-                    b.Navigation("CinemaBranch");
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Screening", b =>
-                {
-                    b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
-                        .WithMany()
-                        .HasForeignKey("HallId");
-
-                    b.Navigation("Hall");
-                });
-
-            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Staff", b =>
-                {
-                    b.HasOne("PlatinumCityManagement.Shared.Domain.CinemaBranch", "CinemaBranch")
-                        .WithMany()
-                        .HasForeignKey("CinemaBranchId");
-
-                    b.Navigation("CinemaBranch");
                 });
 #pragma warning restore 612, 618
         }
