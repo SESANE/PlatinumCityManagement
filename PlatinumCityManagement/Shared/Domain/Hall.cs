@@ -12,7 +12,7 @@ namespace PlatinumCityManagement.Shared.Domain
         public string? Type { get; set; }
         public int Capacity { get; set; }
         public int SeatNumber { get; set; }
-        public bool SeatStatus { get; set; }
+        public bool SeatTaken { get; set; }
         public virtual CinemaBranch? CinemaBranch { get; set; }
 
     }
