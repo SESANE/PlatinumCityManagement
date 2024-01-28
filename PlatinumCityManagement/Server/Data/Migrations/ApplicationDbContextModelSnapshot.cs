@@ -188,6 +188,20 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -277,6 +291,13 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -369,6 +390,26 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "50526fc7-19c8-499b-884c-dc98dd059614",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKQg1zVuCv1tb3W4IrA6GLiUibOE7JUgBWWkSzdtYZ3EH/MdP9kpXehlPqgqEyGrGA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "fe2f5830-2946-4bac-b731-f1febccad45b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.CinemaBranch", b =>
@@ -391,6 +432,15 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CinemaBranches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Tampines",
+                            HallQuantity = 9,
+                            Name = "Platinum City Tampines"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Hall", b =>
@@ -413,7 +463,7 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
 
-                    b.Property<bool>("SeatStatus")
+                    b.Property<bool>("SeatTaken")
                         .HasColumnType("bit");
 
                     b.Property<string>("Type")
@@ -484,6 +534,18 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.HasIndex("CinemaBranchId");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
+                            ContactNumber = "81207097",
+                            EmailAddress = "John@platinumcity.com",
+                            Name = "John",
+                            PerformanceRating = 5,
+                            Role = "Manager"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
