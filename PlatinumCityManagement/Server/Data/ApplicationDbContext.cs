@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PlatinumCityManagement.Server.Configurations.Entities;
 using PlatinumCityManagement.Server.Models;
 using PlatinumCityManagement.Shared.Domain;
 
@@ -21,15 +20,5 @@ namespace PlatinumCityManagement.Server.Data
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Screening> Screenings { get; set; }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new BookingSeedConfiguration());
-            builder.ApplyConfiguration(new CustomerSeedConfiguration());
-            builder.ApplyConfiguration(new MovieSeedConfiguration());
-        }
     }
 }
