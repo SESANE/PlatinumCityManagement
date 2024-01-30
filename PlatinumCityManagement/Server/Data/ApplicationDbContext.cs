@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.EntityFramework.Options;
+﻿using CarRentalManagement1.Server.Configurations.Entities;
+using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -20,6 +21,9 @@ namespace PlatinumCityManagement.Server.Data
         public DbSet<CinemaBranch> CinemaBranches { get; set; }
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Screening> Screenings { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Movie> Movies { get; set; }

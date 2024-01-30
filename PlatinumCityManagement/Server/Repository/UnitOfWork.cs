@@ -16,6 +16,10 @@ namespace PlatinumCityManagement.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private IGenericRepository<Staff> _staffs;
+        private IGenericRepository<CinemaBranch> _cinemaBranches;
+        private IGenericRepository<Hall> _halls;
+        private IGenericRepository<Screening> _screenings;
 
         private IGenericRepository<Booking> _bookings;
         private IGenericRepository<Customer> _customers;
@@ -35,6 +39,14 @@ namespace PlatinumCityManagement.Server.Repository
             => _bookings ??= new GenericRepository<Booking>(_context);
         public IGenericRepository<Customer> Customers
             => _customers ??= new GenericRepository<Customer>(_context);
+        public IGenericRepository<Staff> Staffs
+            => _staffs ??= new GenericRepository<Staff>(_context);
+        public IGenericRepository<CinemaBranch> CinemaBranches
+            => _cinemaBranches ??= new GenericRepository<CinemaBranch>(_context);
+        public IGenericRepository<Hall> Halls
+            => _halls ??= new GenericRepository<Hall>(_context);
+        public IGenericRepository<Screening> Screenings
+            => _screenings ??= new GenericRepository<Screening>(_context);
 
         public void Dispose()
         {
@@ -45,6 +57,22 @@ namespace PlatinumCityManagement.Server.Repository
         public async Task Save(HttpContext httpContext)
         {
             //To be implemented
+            string user = "System";
+
+            var entries = _context.ChangeTracker.Entries()
+                .Where(q => q.State == EntityState.Modified ||
+                    q.State == EntityState.Added);
+
+            foreach (var entry in entries)
+            {
+                ((BaseDomainModel)entry.Entity).DateUpdated = DateTime.Now;
+                ((BaseDomainModel)entry.Entity).UpdatedBy = user;
+                if (entry.State == EntityState.Added)
+                {
+                    ((BaseDomainModel)entry.Entity).DateCreated = DateTime.Now;
+                    ((BaseDomainModel)entry.Entity).CreatedBy = user;
+                }
+            }
 
             await _context.SaveChangesAsync();
         }

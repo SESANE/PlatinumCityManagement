@@ -40,9 +40,9 @@ namespace PlatinumCityManagement.Server.Repository
             return await query.AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> includes)
+        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> includes = null)
         {
             IQueryable<T> query = _db;
 
