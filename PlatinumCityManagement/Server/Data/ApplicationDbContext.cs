@@ -21,15 +21,17 @@ namespace PlatinumCityManagement.Server.Data
         public DbSet<CinemaBranch> CinemaBranches { get; set; }
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Screening> Screenings { get; set; }
+
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.ApplyConfiguration(new StaffSeedConfiguration());
-            builder.ApplyConfiguration(new CinemaBranchSeedConfiguration());
-            builder.ApplyConfiguration(new RoleSeedConfiguration());
-            builder.ApplyConfiguration(new UserSeedConfiguration());
-            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+            builder.ApplyConfiguration(new BookingSeedConfiguration());
+            builder.ApplyConfiguration(new CustomerSeedConfiguration());
+            builder.ApplyConfiguration(new MovieSeedConfiguration());
         }
     }
 }
