@@ -42,7 +42,7 @@ else
             {
                 <tr>
                     <td>@customer.Name</td>
-                    <td>@customer.DOB.ToString("dd/MM/yyyy")</td>
+                    <td>@customer.DOB.Date.ToString("dd/MM/yyyy")</td>
                     <td>@customer.EmailAddress</td>
                     <td>@customer.ContactNumber</td>
                     <td>@customer.Address</td>
@@ -79,15 +79,36 @@ else
     {
         if (Customers != null)
         {
-            var customer = Customers.First(q => q.Id == customerId);
-            var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {customer.Name}?");
-            if (confirm)
+            var customer = Customers.FirstOrDefault(q => q.Id == customerId);
+            if (customer != null)
             {
-                await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
-                await OnInitializedAsync();
-
+                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.Name}?");
+                if (confirm)
+                {
+                    try
+                    {
+                        var response = await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Customers.Remove(customer);
+                            StateHasChanged(); // To refresh the UI
+                        }
+                        else
+                        {
+                            // Handle the error, maybe show a message to the user
+                            var error = await response.Content.ReadAsStringAsync();
+                            Console.WriteLine(error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log or handle the exception
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }
+
 
 }

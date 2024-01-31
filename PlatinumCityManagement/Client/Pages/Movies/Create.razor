@@ -1,1 +1,22 @@
-﻿
+﻿@using PlatinumCityManagement.Client.Components
+@page "/movies/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New movie</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create movie" OnValidSubmit="Createmovie" movie="movie" />
+
+
+@code {
+    Movie movie = new Movie();
+
+    private async Task Createmovie()
+    {
+        await _client.PostAsJsonAsync(Endpoints.MoviesEndpoint, movie);
+        _navManager.NavigateTo("/movies/");
+    }
+
+}

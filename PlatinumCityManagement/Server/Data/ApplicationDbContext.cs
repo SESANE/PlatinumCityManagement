@@ -21,9 +21,7 @@ namespace PlatinumCityManagement.Server.Data
         public DbSet<CinemaBranch> CinemaBranches { get; set; }
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Screening> Screenings { get; set; }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
+
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Movie> Movies { get; set; }

@@ -1,11 +1,11 @@
 ﻿@using PlatinumCityManagement.Client.Components
-<EditForm Model="@customer" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@movie" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Name: </label>
+            <label>Title: </label>
             <div>
                 <InputText @bind-Value="@customer.Name" class="form-control" />
                 <ValidationMessage For="@(() => customer.Name)" />
