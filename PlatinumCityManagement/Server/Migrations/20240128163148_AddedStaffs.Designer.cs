@@ -399,7 +399,7 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7f142c84-4d79-4eb1-b3b8-63d71847bfce",
+                            ConcurrencyStamp = "dc5a6d55-8040-4ea6-8647-4eefb05a4208",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -407,9 +407,9 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF0Thi9Kv5ZSGQXzqOlIspY8y+372VEShLDYsSEGQRcBnfL28dJ5w9vhPuD8vIx7oA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKG5VKA59zMaQUTyzjxX+LANLvqdA7yw6Os979cIi7vNYlGM5SWLFcRcXJC0jLksVQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97b846ea-5b12-4d73-95fa-2f10d5d633a7",
+                            SecurityStamp = "2a5497f5-8bbb-4490-a6fd-39a960e460d2",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -424,6 +424,9 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -454,8 +457,8 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                             Id = 1,
                             Address = "Tampines",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 29, 0, 31, 48, 729, DateTimeKind.Local).AddTicks(9684),
-                            DateUpdated = new DateTime(2024, 1, 29, 0, 31, 48, 729, DateTimeKind.Local).AddTicks(9685),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 12, 23, 814, DateTimeKind.Local).AddTicks(685),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 12, 23, 814, DateTimeKind.Local).AddTicks(685),
                             HallQuantity = 9,
                             Name = "Platinum City Tampines",
                             UpdatedBy = "System"
@@ -524,7 +527,7 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HallId")
+                    b.Property<int>("HallId")
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
@@ -554,10 +557,13 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CinemaBranchId")
+                    b.Property<int>("CinemaBranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -595,10 +601,11 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                         {
                             Id = 1,
                             Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
+                            CinemaBranchId = 1,
                             ContactNumber = "81207097",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 29, 0, 31, 48, 729, DateTimeKind.Local).AddTicks(9428),
-                            DateUpdated = new DateTime(2024, 1, 29, 0, 31, 48, 729, DateTimeKind.Local).AddTicks(9441),
+                            DateCreated = new DateTime(2024, 1, 29, 9, 12, 23, 814, DateTimeKind.Local).AddTicks(337),
+                            DateUpdated = new DateTime(2024, 1, 29, 9, 12, 23, 814, DateTimeKind.Local).AddTicks(352),
                             EmailAddress = "John@platinumcity.com",
                             Name = "John",
                             PerformanceRating = 5,
@@ -671,7 +678,9 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
                         .WithMany()
-                        .HasForeignKey("HallId");
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Hall");
                 });
@@ -680,7 +689,9 @@ namespace PlatinumCityManagement.Server.Data.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.CinemaBranch", "CinemaBranch")
                         .WithMany()
-                        .HasForeignKey("CinemaBranchId");
+                        .HasForeignKey("CinemaBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CinemaBranch");
                 });

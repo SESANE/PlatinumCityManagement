@@ -10,6 +10,7 @@ namespace PlatinumCityManagement.Shared.Domain
     {
         public int Price { get; set; }
         public DateTime Showtime { get; set; }
+        public int HallId { get; set; }
         public virtual Hall? Hall { get; set; }
         
         //public virtual Movie? Movie { get; set; }
