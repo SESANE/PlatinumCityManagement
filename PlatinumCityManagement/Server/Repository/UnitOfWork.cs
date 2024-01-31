@@ -21,6 +21,10 @@ namespace PlatinumCityManagement.Server.Repository
         private IGenericRepository<Hall> _halls;
         private IGenericRepository<Screening> _screenings;
 
+        private IGenericRepository<Booking> _bookings;
+        private IGenericRepository<Customer> _customers;
+        private IGenericRepository<Movie> _movies;
+
         private UserManager<ApplicationUser> _userManager;
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -29,6 +33,12 @@ namespace PlatinumCityManagement.Server.Repository
             _userManager = userManager;
         }
 
+        public IGenericRepository<Movie> Movies
+              => _movies ??= new GenericRepository<Movie>(_context);
+        public IGenericRepository<Booking> Bookings
+            => _bookings ??= new GenericRepository<Booking>(_context);
+        public IGenericRepository<Customer> Customers
+            => _customers ??= new GenericRepository<Customer>(_context);
         public IGenericRepository<Staff> Staffs
             => _staffs ??= new GenericRepository<Staff>(_context);
         public IGenericRepository<CinemaBranch> CinemaBranches
