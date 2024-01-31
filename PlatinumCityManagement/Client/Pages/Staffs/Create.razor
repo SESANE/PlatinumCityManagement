@@ -1,0 +1,28 @@
+﻿@page "/staffs/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Staffs</h3>
+<br />
+<br />
+<EditForm Model="@staff" OnValidSubmit="CreateStaff">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+</EditForm>
+
+@code {
+	Staff staff = new Staff();
+
+	private IList<CinemaBranch>? CinemaBranches;
+
+	protected async override Task OnInitializedAsync()
+	{
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.StaffsEndpoint}");
+	}
+
+	private async Task CreateStaff()
+	{
+		await _client.PostAsJsonAsync(Endpoints.StaffsEndpoint, staff);
+		_navManager.NavigateTo("/staffs/");
+	}
+}
