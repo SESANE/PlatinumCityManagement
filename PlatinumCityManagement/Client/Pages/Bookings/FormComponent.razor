@@ -1,0 +1,116 @@
+﻿@using PlatinumCityManagement.Client.Components
+@inject HttpClient _client
+
+<EditForm Model="@booking" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Staff  </label>
+            <div>
+                <InputSelect @bind-Value="booking.StaffId" class="form-control">
+                    <option value="">-- Select staff --</option>
+                    @if (Staffs != null)
+                    {
+                        foreach (var staff in Staffs)
+                        {
+                            <option value="@staff.Id">@staff.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => booking.StaffId)" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Customer: </label>
+            <div>
+                <InputSelect @bind-Value="booking.CustomerId" class="form-control">
+                    <option value="">-- Select Customer --</option>
+                    @if (Customers != null)
+                    {
+                        foreach (var customer in Customers)
+                        {
+                            <option value="@customer.Id">@customer.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => booking.CustomerId)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Booking type: </label>
+            <div>
+                <InputText @bind-Value="@booking.BookingType" class="form-control" />
+                <ValidationMessage For="@(() => booking.BookingType)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Total price </label>
+            <div>
+                <InputNumber @bind-Value="@booking.TotalPrice" class="form-control" />
+                <ValidationMessage For="@(() => booking.TotalPrice)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Seat quantity </label>
+            <div>
+                <InputNumber @bind-Value="@booking.SeatQty" class="form-control" />
+                <ValidationMessage For="@(() => booking.SeatQty)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Seat no </label>
+            <div>
+                <InputText @bind-Value="@booking.SeatNo" class="form-control" />
+                <ValidationMessage For="@(() => booking.SeatNo)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Booking Date </label>
+            <div>
+                <InputDate @bind-Value="@booking.BookingDateTime" class="form-control" />
+                <ValidationMessage For="@(() => booking.BookingDateTime)" />
+            </div>
+        </div>
+      
+
+      
+
+        <br />
+        <br />
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="bookings" />
+
+</EditForm>
+
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Booking booking { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Staff>? Staffs;
+    private IList<Customer>? Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+    }
+}

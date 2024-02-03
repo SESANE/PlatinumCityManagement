@@ -29,9 +29,11 @@ namespace PlatinumCityManagement.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new BookingSeedConfiguration());
+        
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new MovieSeedConfiguration());
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
+
         }
     }
 }

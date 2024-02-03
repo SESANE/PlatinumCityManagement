@@ -1,22 +1,32 @@
 ﻿@using PlatinumCityManagement.Client.Components
-@page "/customers/create/"
+@page "/bookings/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Customer</h3>
+<h3 class="card-title">Create New Booking</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Customer" OnValidSubmit="CreateCustomer" customer="customer" />
+<FormComponent ButtonText="Create Booking" OnValidSubmit="CreateBooking" booking="booking" />
 
 
 @code {
-    Customer customer = new Customer();
+    Booking booking = new Booking();
 
-    private async Task CreateCustomer()
+    private IList<Staff>? Staffs;
+    private IList<Customer>? Customers;
+
+    protected async override Task OnInitializedAsync()
     {
-        await _client.PostAsJsonAsync(Endpoints.CustomersEndpoint, customer);
-        _navManager.NavigateTo("/customers/");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+
+    }
+
+    private async Task CreateBooking()
+    {
+        await _client.PostAsJsonAsync(Endpoints.BookingsEndpoint, booking);
+        _navManager.NavigateTo("/bookings/");
     }
 
 }

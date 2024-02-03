@@ -12,6 +12,7 @@ namespace PlatinumCityManagement.Client.Static
         public static readonly string MoviesEndpoint = $"{Prefix}/movies";
         public static readonly string CustomersEndpoint = $"{Prefix}/customers";
         public static readonly string BookingsEndpoint = $"{Prefix}/bookings";
-        public static readonly string StaffEndpoint = $"{Prefix}/staffs";
+        public static readonly string StaffsEndpoint = $"{Prefix}/staffs";
+       
     }
 }
