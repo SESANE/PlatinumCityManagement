@@ -41,7 +41,7 @@ namespace PlatinumCityManagement.Server.Controllers
             //    return NotFound();
             //}
             //  return await _context.Staffs.ToListAsync();
-            var staffs = await _unitOfWork.Staffs.GetAll();
+            var staffs = await _unitOfWork.Staffs.GetAll(includes: q => q.Include(x => x.CinemaBranch));
             return Ok(staffs);
         }
 

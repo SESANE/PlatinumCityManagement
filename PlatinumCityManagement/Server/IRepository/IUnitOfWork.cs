@@ -13,5 +13,6 @@ namespace PlatinumCityManagement.Server.IRepository
         IGenericRepository<Hall> Halls { get; }
         IGenericRepository<Screening> Screenings { get; }
         IGenericRepository<Staff> Staffs { get; }
-    }
+		IGenericRepository<Seat> Seats { get; }
+	}
 }

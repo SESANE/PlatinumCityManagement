@@ -1,4 +1,88 @@
 ﻿@page "/staffs/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
+
+<h3 class="card-title">Staffs</h3>
+<br />
+<a href="/staffs/create" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Staff
+</a>
+<br />
+<br />
+@if (Staffs == null)
+{
+	<div class="alert alert-info">Loading Staffs...</div>
+}
+else
+{
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Address</th>
+				<th>Contact Number</th>
+				<th>Role</th>
+				<th>Performance Rating</th>
+				<th>Cinema Branch</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var staff in Staffs)
+			{
+				<tr>
+					<td>@staff.Name</td>
+					<td>@staff.Address</td>
+					<td>@staff.ContactNumber</td>
+					<td>@staff.Role</td>
+					<td>@staff.PerformanceRating</td>
+					<td>@staff.CinemaBranch.Name</td>
+					<td>
+						<a href="/staffs/view/@staff.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/staffs/edit/@staff.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(staff.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code{
+	private List<Staff>? Staffs;
+
+	protected async override Task OnInitializedAsync()
+	{
+		_interceptor.MonitorEvent();
+		Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+	}
+
+	async Task Delete(int staffId)
+	{
+		if(Staffs != null)
+		{
+			var staff = Staffs.First(q => q.Id == staffId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{staff.Name}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.StaffsEndpoint}/{staffId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+
+	public void Dispose()
+	{
+		_interceptor.DisposeEvent();
+	}
+}

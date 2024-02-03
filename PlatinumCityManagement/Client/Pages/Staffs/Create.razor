@@ -5,10 +5,8 @@
 <h3 class="card-title">Create New Staffs</h3>
 <br />
 <br />
-<EditForm Model="@staff" OnValidSubmit="CreateStaff">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
-</EditForm>
+
+<FormComponent ButtonText="Create Staff" staff="staff" OnValidSubmit="@CreateStaff" />
 
 @code {
 	Staff staff = new Staff();
@@ -17,7 +15,7 @@
 
 	protected async override Task OnInitializedAsync()
 	{
-		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.StaffsEndpoint}");
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.CinemaBranchesEndpoint}");
 	}
 
 	private async Task CreateStaff()
