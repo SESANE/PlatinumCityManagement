@@ -397,14 +397,13 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
                     SeatQty = table.Column<int>(type: "int", nullable: false),
-                    SeatNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SeatNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StaffId = table.Column<int>(type: "int", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: true),
-                    ScreeningId = table.Column<int>(type: "int", nullable: true),
+                    StaffId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -417,33 +416,29 @@ namespace PlatinumCityManagement.Server.Migrations
                         name: "FK_Bookings_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Bookings_Screenings_ScreeningId",
-                        column: x => x.ScreeningId,
-                        principalTable: "Screenings",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bookings_Staffs_StaffId",
                         column: x => x.StaffId,
                         principalTable: "Staffs",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Bookings",
-                columns: new[] { "Id", "BookingDateTime", "BookingType", "CreatedBy", "CustomerId", "DateCreated", "DateUpdated", "ScreeningId", "SeatNo", "SeatQty", "StaffId", "TotalPrice", "UpdatedBy" },
-                values: new object[] { 1, new DateTime(2024, 1, 19, 18, 8, 33, 0, DateTimeKind.Unspecified), "Regular", null, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "F5, F6", 2, null, 0.0, null });
 
             migrationBuilder.InsertData(
                 table: "CinemaBranches",
                 columns: new[] { "Id", "Address", "CreatedBy", "DateCreated", "DateUpdated", "HallQuantity", "Name", "UpdatedBy" },
-                values: new object[] { 1, "Tampines", "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8595), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8596), 9, "Platinum City Tampines", "System" });
+                values: new object[] { 1, "Tampines", "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5318), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5319), 9, "Platinum City Tampines", "System" });
 
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "Id", "Address", "ContactNumber", "CreatedBy", "DOB", "DateCreated", "DateUpdated", "EmailAddress", "MembershipType", "Name", "Points", "UpdatedBy" },
-                values: new object[] { 1, "707 Tampines Street 71 #09-20, 520707", "89220951", null, new DateTime(2005, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "lee@gmail.com", "Premium", "Johnny Lee", 133, null });
+                values: new object[,]
+                {
+                    { 1, "707 Tampines Street 71 #09-20, 520707", "89220951", null, new DateTime(2005, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "lee@gmail.com", "Premium", "Johnny Lee", 133, null },
+                    { 2, "707 Geylang Street 71 #02-20, 520707", "89235451", null, new DateTime(2002, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "tan@gmail.com", "Premium", "Yan Teo", 192, null }
+                });
 
             migrationBuilder.InsertData(
                 table: "Movies",
@@ -463,28 +458,28 @@ namespace PlatinumCityManagement.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Halls",
                 columns: new[] { "Id", "Capacity", "CinemaBranchId", "CreatedBy", "DateCreated", "DateUpdated", "Name", "ScreeningQuality", "UpdatedBy" },
-                values: new object[] { 1, 100, 1, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8249), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8250), "1", "IMAX", "System" });
+                values: new object[] { 1, 100, 1, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4649), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4650), "1", "IMAX", "System" });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "Address", "CinemaBranchId", "ContactNumber", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "Name", "PerformanceRating", "Role", "UpdatedBy" },
-                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", 1, "81207097", "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7856), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7870), "John@platinumcity.com", "John", 5, "Manager", "System" });
+                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", 1, "81207097", "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3932), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3945), "John@platinumcity.com", "John", 5, "Manager", "System" });
 
             migrationBuilder.InsertData(
                 table: "Seats",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "HallId", "SeatNo", "SeatTaken", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406), 1, "A1", false, "System" },
-                    { 2, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8408), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8409), 1, "A2", false, "System" },
-                    { 3, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410), 1, "A3", false, "System" },
-                    { 4, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412), 1, "A4", false, "System" },
-                    { 5, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8413), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8414), 1, "A5", false, "System" },
-                    { 6, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415), 1, "A6", false, "System" },
-                    { 7, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417), 1, "A7", false, "System" },
-                    { 8, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8418), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8419), 1, "A8", false, "System" },
-                    { 9, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8420), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8421), 1, "A9", true, "System" },
-                    { 10, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422), 1, "A10", true, "System" }
+                    { 1, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4961), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4962), 1, "A1", false, "System" },
+                    { 2, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4965), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4966), 1, "A2", false, "System" },
+                    { 3, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4968), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4969), 1, "A3", false, "System" },
+                    { 4, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4971), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4972), 1, "A4", false, "System" },
+                    { 5, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4974), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4975), 1, "A5", false, "System" },
+                    { 6, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4977), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4978), 1, "A6", false, "System" },
+                    { 7, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980), 1, "A7", false, "System" },
+                    { 8, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4982), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4983), 1, "A8", false, "System" },
+                    { 9, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4985), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4986), 1, "A9", true, "System" },
+                    { 10, "System", new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988), new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988), 1, "A10", true, "System" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -530,11 +525,6 @@ namespace PlatinumCityManagement.Server.Migrations
                 name: "IX_Bookings_CustomerId",
                 table: "Bookings",
                 column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bookings_ScreeningId",
-                table: "Bookings",
-                column: "ScreeningId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_StaffId",
@@ -634,6 +624,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "Screenings");
+
+            migrationBuilder.DropTable(
                 name: "Seats");
 
             migrationBuilder.DropTable(
@@ -646,16 +639,13 @@ namespace PlatinumCityManagement.Server.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Screenings");
-
-            migrationBuilder.DropTable(
                 name: "Staffs");
 
             migrationBuilder.DropTable(
-                name: "Halls");
+                name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "Halls");
 
             migrationBuilder.DropTable(
                 name: "CinemaBranches");

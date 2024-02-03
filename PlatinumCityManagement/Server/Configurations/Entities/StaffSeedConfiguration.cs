@@ -18,10 +18,11 @@ namespace PlatinumCityManagement.Server.Configurations.Entities
                     ContactNumber = "81207097",
                     Role = "Manager",
                     PerformanceRating = 5,
-                    DateCreated = DateTime.Now,
+					CinemaBranchId = 1,
+					DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
-                    UpdatedBy = "System"
+                    UpdatedBy = "System",
                 }
             );
         }

@@ -443,11 +443,14 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HallQuantity")
+                    b.Property<int?>("HallQuantity")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -455,6 +458,19 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CinemaBranches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Tampines",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5318),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5319),
+                            HallQuantity = 9,
+                            Name = "Platinum City Tampines",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Customer", b =>
@@ -540,7 +556,7 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Capacity")
+                    b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<int?>("CinemaBranchId")
@@ -555,16 +571,10 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ScreeningQuality")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("SeatTaken")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Type")
+                    b.Property<string>("ScreeningQuality")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -575,6 +585,20 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.HasIndex("CinemaBranchId");
 
                     b.ToTable("Halls");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 100,
+                            CinemaBranchId = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4649),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4650),
+                            Name = "1",
+                            ScreeningQuality = "IMAX",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Movie", b =>
@@ -746,10 +770,13 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HallId")
+                    b.Property<int?>("HallId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Price")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Showtime")
@@ -762,7 +789,157 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     b.HasIndex("HallId");
 
+                    b.HasIndex("MovieId");
+
                     b.ToTable("Screenings");
+                });
+
+            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Seat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HallId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeatNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SeatTaken")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HallId");
+
+                    b.ToTable("Seats");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4961),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4962),
+                            HallId = 1,
+                            SeatNo = "A1",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4965),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4966),
+                            HallId = 1,
+                            SeatNo = "A2",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4968),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4969),
+                            HallId = 1,
+                            SeatNo = "A3",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4971),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4972),
+                            HallId = 1,
+                            SeatNo = "A4",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4974),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4975),
+                            HallId = 1,
+                            SeatNo = "A5",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4977),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4978),
+                            HallId = 1,
+                            SeatNo = "A6",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980),
+                            HallId = 1,
+                            SeatNo = "A7",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4982),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4983),
+                            HallId = 1,
+                            SeatNo = "A8",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4985),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4986),
+                            HallId = 1,
+                            SeatNo = "A9",
+                            SeatTaken = true,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988),
+                            HallId = 1,
+                            SeatNo = "A10",
+                            SeatTaken = true,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Staff", b =>
@@ -776,10 +953,11 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CinemaBranchId")
+                    b.Property<int>("CinemaBranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -792,15 +970,19 @@ namespace PlatinumCityManagement.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PerformanceRating")
                         .HasColumnType("int");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -817,10 +999,11 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 1,
                             Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
+                            CinemaBranchId = 1,
                             ContactNumber = "81207097",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1413),
-                            DateUpdated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1424),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3932),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3945),
                             EmailAddress = "John@platinumcity.com",
                             Name = "John",
                             PerformanceRating = 5,
@@ -912,6 +1095,21 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
                         .WithMany()
+                        .HasForeignKey("HallId");
+
+                    b.HasOne("PlatinumCityManagement.Shared.Domain.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+
+                    b.Navigation("Hall");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Seat", b =>
+                {
+                    b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
+                        .WithMany()
                         .HasForeignKey("HallId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -923,7 +1121,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.CinemaBranch", "CinemaBranch")
                         .WithMany()
-                        .HasForeignKey("CinemaBranchId");
+                        .HasForeignKey("CinemaBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CinemaBranch");
                 });
