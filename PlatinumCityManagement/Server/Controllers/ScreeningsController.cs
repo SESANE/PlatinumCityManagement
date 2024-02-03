@@ -41,7 +41,7 @@ namespace PlatinumCityManagement.Server.Controllers
             //    return NotFound();
             //}
             //  return await _context.Screenings.ToListAsync();
-            var screenings = await _unitOfWork.Screenings.GetAll();
+            var screenings = await _unitOfWork.Screenings.GetAll(includes: q => q.Include(x => x.Hall).Include(x => x.Movie));
             return Ok(screenings);
         }
 

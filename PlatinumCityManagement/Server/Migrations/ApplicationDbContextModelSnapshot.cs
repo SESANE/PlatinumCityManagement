@@ -383,12 +383,13 @@ namespace PlatinumCityManagement.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
@@ -397,16 +398,14 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ScreeningId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SeatNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SeatQty")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StaffId")
+                    b.Property<int>("StaffId")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalPrice")
@@ -419,24 +418,9 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ScreeningId");
-
                     b.HasIndex("StaffId");
 
                     b.ToTable("Bookings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookingDateTime = new DateTime(2024, 1, 19, 18, 8, 33, 0, DateTimeKind.Unspecified),
-                            BookingType = "Regular",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SeatNo = "F5, F6",
-                            SeatQty = 2,
-                            TotalPrice = 0.0
-                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.CinemaBranch", b =>
@@ -532,6 +516,19 @@ namespace PlatinumCityManagement.Server.Migrations
                             MembershipType = "Premium",
                             Name = "Johnny Lee",
                             Points = 133
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "707 Geylang Street 71 #02-20, 520707",
+                            ContactNumber = "89235451",
+                            DOB = new DateTime(2002, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "tan@gmail.com",
+                            MembershipType = "Premium",
+                            Name = "Yan Teo",
+                            Points = 192
                         });
                 });
 
@@ -749,7 +746,7 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HallId")
+                    b.Property<int>("HallId")
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
@@ -814,6 +811,22 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.HasIndex("CinemaBranchId");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
+                            ContactNumber = "81207097",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1413),
+                            DateUpdated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1424),
+                            EmailAddress = "John@platinumcity.com",
+                            Name = "John",
+                            PerformanceRating = 5,
+                            Role = "Manager",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -871,19 +884,17 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("PlatinumCityManagement.Shared.Domain.Screening", "Screening")
-                        .WithMany()
-                        .HasForeignKey("ScreeningId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PlatinumCityManagement.Shared.Domain.Staff", "Staff")
                         .WithMany()
-                        .HasForeignKey("StaffId");
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Screening");
 
                     b.Navigation("Staff");
                 });
@@ -901,7 +912,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
                         .WithMany()
-                        .HasForeignKey("HallId");
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Hall");
                 });

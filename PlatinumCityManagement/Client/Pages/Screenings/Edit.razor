@@ -1,0 +1,22 @@
+﻿@page "/screenings/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Screening</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditScreening" screening="screening" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	Screening? screening = new Screening();
+	protected async override Task OnInitializedAsync()
+	{
+		screening = await _client.GetFromJsonAsync<Screening>($"{Endpoints.ScreeningsEndpoint}/{id}");
+	}
+
+	private async Task EditScreening()
+	{
+		await _client.PutAsJsonAsync($"{Endpoints.ScreeningsEndpoint}/{id}", screening);
+		_navManager.NavigateTo("/screenings/");
+	}
+}

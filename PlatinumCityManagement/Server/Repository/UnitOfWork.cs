@@ -20,8 +20,8 @@ namespace PlatinumCityManagement.Server.Repository
         private IGenericRepository<CinemaBranch> _cinemaBranches;
         private IGenericRepository<Hall> _halls;
         private IGenericRepository<Screening> _screenings;
-
-        private IGenericRepository<Booking> _bookings;
+		private IGenericRepository<Seat> _seats;
+		private IGenericRepository<Booking> _bookings;
         private IGenericRepository<Customer> _customers;
         private IGenericRepository<Movie> _movies;
 
@@ -45,7 +45,9 @@ namespace PlatinumCityManagement.Server.Repository
             => _cinemaBranches ??= new GenericRepository<CinemaBranch>(_context);
         public IGenericRepository<Hall> Halls
             => _halls ??= new GenericRepository<Hall>(_context);
-        public IGenericRepository<Screening> Screenings
+		public IGenericRepository<Seat> Seats
+	        => _seats ??= new GenericRepository<Seat>(_context);
+		public IGenericRepository<Screening> Screenings
             => _screenings ??= new GenericRepository<Screening>(_context);
 
         public void Dispose()

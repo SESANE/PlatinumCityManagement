@@ -1,0 +1,72 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@screening" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Movie Name: </label>
+			<div>
+				<InputSelect @bind-Value="@screening.MovieId" class="form-control">
+					<option value="">-- Select Movie --</option>
+					@if (Movies != null)
+					{
+						foreach (var movie in Movies)
+						{
+							<option value="@movie.Id">@movie.Title</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => screening.MovieId)" />
+			</div>
+			<label>Hall: </label>
+			<div>
+				<InputSelect @bind-Value="@screening.HallId" class="form-control">
+					<option value="">-- Select Hall --</option>
+					@if (Halls != null)
+					{
+						foreach (var hall in Halls)
+						{
+							<option value="@hall.Id">@hall.Name</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => screening.HallId)" />
+			</div>
+			<label>Showtime: </label>
+			<div>
+				<InputDate Type="InputDateType.DateTimeLocal"
+						   min="@DateTime.Today.ToString("yyyy-MM-dd")" @bind-Value="@screening.Showtime" />
+				<ValidationMessage For="@(() => screening.Showtime)" />
+			</div>
+			<label>Price: </label>
+			<div>
+				<InputNumber @bind-Value="@screening.Price" class="form-control" />
+				<ValidationMessage For="@(() => screening.Price)" />
+			</div>
+		</div>
+    </fieldset>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+	<BackToList Target="screenings" />
+
+</EditForm>
+
+@code {
+	[Parameter] public bool Disabled { get; set; } = false;
+	[Parameter] public Screening? screening { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	private IList<Movie>? Movies;
+	private IList<Hall>? Halls;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Movies = await _client.GetFromJsonAsync<List<Movie>>($"{Endpoints.MoviesEndpoint}");
+		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
+	}
+}

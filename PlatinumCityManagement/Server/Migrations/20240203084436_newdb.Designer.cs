@@ -12,15 +12,15 @@ using PlatinumCityManagement.Server.Data;
 namespace PlatinumCityManagement.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240128104225_Seed")]
-    partial class Seed
+    [Migration("20240203084436_newdb")]
+    partial class newdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.14")
+                .HasAnnotation("ProductVersion", "7.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -388,8 +388,17 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<string>("BookingType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("ScreeningId")
                         .HasColumnType("int");
@@ -405,6 +414,9 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -422,6 +434,8 @@ namespace PlatinumCityManagement.Server.Migrations
                             Id = 1,
                             BookingDateTime = new DateTime(2024, 1, 19, 18, 8, 33, 0, DateTimeKind.Unspecified),
                             BookingType = "Regular",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SeatNo = "F5, F6",
                             SeatQty = 2,
                             TotalPrice = 0.0
@@ -439,15 +453,43 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HallQuantity")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("HallQuantity")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("CinemaBranches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Tampines",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8595),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8596),
+                            HallQuantity = 9,
+                            Name = "Platinum City Tampines",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Customer", b =>
@@ -464,7 +506,16 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
@@ -474,10 +525,14 @@ namespace PlatinumCityManagement.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -490,7 +545,10 @@ namespace PlatinumCityManagement.Server.Migrations
                             Address = "707 Tampines Street 71 #09-20, 520707",
                             ContactNumber = "89220951",
                             DOB = new DateTime(2005, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "lee@gmail.com",
+                            MembershipType = "Premium",
                             Name = "Johnny Lee",
                             Points = 133
                         });
@@ -504,22 +562,28 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Capacity")
+                    b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<int?>("CinemaBranchId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ScreeningQuality")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("SeatStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Type")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -527,6 +591,20 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.HasIndex("CinemaBranchId");
 
                     b.ToTable("Halls");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 100,
+                            CinemaBranchId = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8249),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8250),
+                            Name = "1",
+                            ScreeningQuality = "IMAX",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Movie", b =>
@@ -539,6 +617,15 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     b.Property<string>("Cast")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
@@ -558,6 +645,9 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
@@ -567,6 +657,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 1,
                             Cast = "Brie Larson, Teyonah Parris, Iman Vellani",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 45mins",
                             MovieDescription = "Brie Larson, Iman Vellani, and director Nia DaCosta surprised fans across the country. Carol Danvers AKA Captain Marvel has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe.",
                             Poster = "/posters/marvels.jpeg",
@@ -578,6 +670,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 2,
                             Cast = "Margot Robbie, Ryan Gosling",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 33mins",
                             MovieDescription = "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
                             Poster = "/posters/barbie.jpg",
@@ -589,6 +683,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 3,
                             Cast = "Timothee Chalemet",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 30mins",
                             MovieDescription = "With dreams of opening a shop in a city renowned for its chocolate, a young and poor Willy Wonka discovers that the industry is run by a cartel of greedy chocolatiers.",
                             Poster = "/posters/wonka.jpg",
@@ -600,6 +696,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 4,
                             Cast = "David S. Goyer",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 13mins",
                             MovieDescription = "Blade, now a wanted man by the FBI, must join forces with the Nightstalkers to face his most challenging enemy yet: Dracula.",
                             Poster = "/posters/blade3.jpg",
@@ -611,6 +709,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 5,
                             Cast = "Alexander Skarsgård, Millie Bobbie Brown",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 33mins",
                             MovieDescription = "The epic next chapter in the cinematic Monsterverse pits two of the greatest icons in motion picture history against each other--the fearsome Godzilla and the mighty Kong--with humanity caught in the balance.",
                             Poster = "/posters/godzillaa.jpg",
@@ -622,6 +722,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 6,
                             Cast = "Gong Yoo, Jung Yumi, Ma Dong Seok",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 43mins",
                             MovieDescription = "While a zombie virus breaks out in South Korea, passengers struggle to survive on the train from Seoul to Busan.",
                             Poster = "/posters/traintobusan.jpg",
@@ -633,6 +735,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 7,
                             Cast = "Albert Brooks",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 23mins",
                             MovieDescription = "After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.",
                             Poster = "/posters/nemo.jpg",
@@ -644,6 +748,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 8,
                             Cast = "Ryan Reynolds",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = "1h 54mins",
                             MovieDescription = "A wisecracking mercenary gets experimented on and becomes immortal yet hideously scarred, and sets out to track down the man who ruined his looks.",
                             Poster = "/posters/deadpool.jpg",
@@ -661,20 +767,185 @@ namespace PlatinumCityManagement.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("HallId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Price")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Showtime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HallId");
 
+                    b.HasIndex("MovieId");
+
                     b.ToTable("Screenings");
+                });
+
+            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Seat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HallId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeatNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SeatTaken")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HallId");
+
+                    b.ToTable("Seats");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406),
+                            HallId = 1,
+                            SeatNo = "A1",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8408),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8409),
+                            HallId = 1,
+                            SeatNo = "A2",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410),
+                            HallId = 1,
+                            SeatNo = "A3",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412),
+                            HallId = 1,
+                            SeatNo = "A4",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8413),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8414),
+                            HallId = 1,
+                            SeatNo = "A5",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415),
+                            HallId = 1,
+                            SeatNo = "A6",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417),
+                            HallId = 1,
+                            SeatNo = "A7",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8418),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8419),
+                            HallId = 1,
+                            SeatNo = "A8",
+                            SeatTaken = false,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8420),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8421),
+                            HallId = 1,
+                            SeatNo = "A9",
+                            SeatTaken = true,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422),
+                            HallId = 1,
+                            SeatNo = "A10",
+                            SeatTaken = true,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Staff", b =>
@@ -689,21 +960,39 @@ namespace PlatinumCityManagement.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CinemaBranchId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("ContactNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PerformanceRating")
                         .HasColumnType("int");
 
                     b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -711,6 +1000,23 @@ namespace PlatinumCityManagement.Server.Migrations
                     b.HasIndex("CinemaBranchId");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
+                            CinemaBranchId = 1,
+                            ContactNumber = "81207097",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7856),
+                            DateUpdated = new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7870),
+                            EmailAddress = "John@platinumcity.com",
+                            Name = "John",
+                            PerformanceRating = 5,
+                            Role = "Manager",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -800,6 +1106,23 @@ namespace PlatinumCityManagement.Server.Migrations
                         .WithMany()
                         .HasForeignKey("HallId");
 
+                    b.HasOne("PlatinumCityManagement.Shared.Domain.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+
+                    b.Navigation("Hall");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("PlatinumCityManagement.Shared.Domain.Seat", b =>
+                {
+                    b.HasOne("PlatinumCityManagement.Shared.Domain.Hall", "Hall")
+                        .WithMany()
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Hall");
                 });
 
@@ -807,7 +1130,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     b.HasOne("PlatinumCityManagement.Shared.Domain.CinemaBranch", "CinemaBranch")
                         .WithMany()
-                        .HasForeignKey("CinemaBranchId");
+                        .HasForeignKey("CinemaBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CinemaBranch");
                 });

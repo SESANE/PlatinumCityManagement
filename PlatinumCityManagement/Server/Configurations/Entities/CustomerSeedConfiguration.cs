@@ -14,18 +14,30 @@ namespace PlatinumCityManagement.Server.Configurations.Entities
                   {
                       Id = 1,
                       Name = "Johnny Lee",
-                      DOB = new DateTime(2005, 7, 15),
+                      DOB = new DateTime(2005, 07, 15),
                       Address = "707 Tampines Street 71 #09-20, 520707",
                       EmailAddress = "lee@gmail.com",
                       ContactNumber = "89220951",
                       MembershipType = "Premium",
                       Points = 133
 
-                  }
+                  },
+                   new Customer
+                   {
+                       Id = 2,
+                       Name = "Yan Teo",
+                       DOB = new DateTime(2002, 03, 15),
+                       Address = "707 Geylang Street 71 #02-20, 520707",
+                       EmailAddress = "tan@gmail.com",
+                       ContactNumber = "89235451",
+                       MembershipType = "Premium",
+                       Points = 192
+
+                   }
 
 
 
-);                  
+                   );                  
         }
     }
 }

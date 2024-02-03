@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PlatinumCityManagement.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class Seed : Migration
+    public partial class newdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,9 +60,13 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HallQuantity = table.Column<int>(type: "int", nullable: false)
+                    HallQuantity = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,13 +79,17 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Points = table.Column<int>(type: "int", nullable: false),
-                    MembershipType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MembershipType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +145,11 @@ namespace PlatinumCityManagement.Server.Migrations
                     MovieDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cast = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Review = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Poster = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Poster = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,12 +288,14 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ScreeningQuality = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Capacity = table.Column<int>(type: "int", nullable: false),
-                    SeatNumber = table.Column<int>(type: "int", nullable: false),
-                    SeatStatus = table.Column<bool>(type: "bit", nullable: false),
-                    CinemaBranchId = table.Column<int>(type: "int", nullable: true)
+                    Capacity = table.Column<int>(type: "int", nullable: true),
+                    CinemaBranchId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -299,13 +313,17 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PerformanceRating = table.Column<int>(type: "int", nullable: false),
-                    CinemaBranchId = table.Column<int>(type: "int", nullable: true)
+                    CinemaBranchId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -314,7 +332,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         name: "FK_Staffs_CinemaBranches_CinemaBranchId",
                         column: x => x.CinemaBranchId,
                         principalTable: "CinemaBranches",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,9 +342,14 @@ namespace PlatinumCityManagement.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: true),
                     Showtime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HallId = table.Column<int>(type: "int", nullable: true)
+                    HallId = table.Column<int>(type: "int", nullable: true),
+                    MovieId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -335,6 +359,36 @@ namespace PlatinumCityManagement.Server.Migrations
                         column: x => x.HallId,
                         principalTable: "Halls",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Screenings_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Seats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SeatNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SeatTaken = table.Column<bool>(type: "bit", nullable: false),
+                    HallId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Seats_Halls_HallId",
+                        column: x => x.HallId,
+                        principalTable: "Halls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,7 +404,11 @@ namespace PlatinumCityManagement.Server.Migrations
                     BookingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StaffId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
-                    ScreeningId = table.Column<int>(type: "int", nullable: true)
+                    ScreeningId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -374,27 +432,59 @@ namespace PlatinumCityManagement.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Bookings",
-                columns: new[] { "Id", "BookingDateTime", "BookingType", "CustomerId", "ScreeningId", "SeatNo", "SeatQty", "StaffId", "TotalPrice" },
-                values: new object[] { 1, new DateTime(2024, 1, 19, 18, 8, 33, 0, DateTimeKind.Unspecified), "Regular", null, null, "F5, F6", 2, null, 0.0 });
+                columns: new[] { "Id", "BookingDateTime", "BookingType", "CreatedBy", "CustomerId", "DateCreated", "DateUpdated", "ScreeningId", "SeatNo", "SeatQty", "StaffId", "TotalPrice", "UpdatedBy" },
+                values: new object[] { 1, new DateTime(2024, 1, 19, 18, 8, 33, 0, DateTimeKind.Unspecified), "Regular", null, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "F5, F6", 2, null, 0.0, null });
+
+            migrationBuilder.InsertData(
+                table: "CinemaBranches",
+                columns: new[] { "Id", "Address", "CreatedBy", "DateCreated", "DateUpdated", "HallQuantity", "Name", "UpdatedBy" },
+                values: new object[] { 1, "Tampines", "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8595), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8596), 9, "Platinum City Tampines", "System" });
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "Id", "Address", "ContactNumber", "DOB", "EmailAddress", "MembershipType", "Name", "Points" },
-                values: new object[] { 1, "707 Tampines Street 71 #09-20, 520707", "89220951", new DateTime(2005, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "lee@gmail.com", null, "Johnny Lee", 133 });
+                columns: new[] { "Id", "Address", "ContactNumber", "CreatedBy", "DOB", "DateCreated", "DateUpdated", "EmailAddress", "MembershipType", "Name", "Points", "UpdatedBy" },
+                values: new object[] { 1, "707 Tampines Street 71 #09-20, 520707", "89220951", null, new DateTime(2005, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "lee@gmail.com", "Premium", "Johnny Lee", 133, null });
 
             migrationBuilder.InsertData(
                 table: "Movies",
-                columns: new[] { "Id", "Cast", "Duration", "MovieDescription", "Poster", "Rating", "Review", "Title" },
+                columns: new[] { "Id", "Cast", "CreatedBy", "DateCreated", "DateUpdated", "Duration", "MovieDescription", "Poster", "Rating", "Review", "Title", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "Brie Larson, Teyonah Parris, Iman Vellani", "1h 45mins", "Brie Larson, Iman Vellani, and director Nia DaCosta surprised fans across the country. Carol Danvers AKA Captain Marvel has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe.", "/posters/marvels.jpeg", "5.0", "okok", "The Marvels" },
-                    { 2, "Margot Robbie, Ryan Gosling", "1h 33mins", "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.", "/posters/barbie.jpg", "3.9", "meh", "Barbie" },
-                    { 3, "Timothee Chalemet", "1h 30mins", "With dreams of opening a shop in a city renowned for its chocolate, a young and poor Willy Wonka discovers that the industry is run by a cartel of greedy chocolatiers.", "/posters/wonka.jpg", "2.0", "eeee", "Wonka" },
-                    { 4, "David S. Goyer", "1h 13mins", "Blade, now a wanted man by the FBI, must join forces with the Nightstalkers to face his most challenging enemy yet: Dracula.", "/posters/blade3.jpg", "2.3", "ok", "Blade" },
-                    { 5, "Alexander Skarsgård, Millie Bobbie Brown", "1h 33mins", "The epic next chapter in the cinematic Monsterverse pits two of the greatest icons in motion picture history against each other--the fearsome Godzilla and the mighty Kong--with humanity caught in the balance.", "/posters/godzillaa.jpg", "2.3", "ok only", "Godzilla" },
-                    { 6, "Gong Yoo, Jung Yumi, Ma Dong Seok", "1h 43mins", "While a zombie virus breaks out in South Korea, passengers struggle to survive on the train from Seoul to Busan.", "/posters/traintobusan.jpg", "4.8", "nice", "Train To Busan" },
-                    { 7, "Albert Brooks", "1h 23mins", "After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.", "/posters/nemo.jpg", "4.9", "amazing", "Nemo" },
-                    { 8, "Ryan Reynolds", "1h 54mins", "A wisecracking mercenary gets experimented on and becomes immortal yet hideously scarred, and sets out to track down the man who ruined his looks.", "/posters/deadpool.jpg", "3.9", "not bad", "Deadpool" }
+                    { 1, "Brie Larson, Teyonah Parris, Iman Vellani", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 45mins", "Brie Larson, Iman Vellani, and director Nia DaCosta surprised fans across the country. Carol Danvers AKA Captain Marvel has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe.", "/posters/marvels.jpeg", "5.0", "okok", "The Marvels", null },
+                    { 2, "Margot Robbie, Ryan Gosling", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 33mins", "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.", "/posters/barbie.jpg", "3.9", "meh", "Barbie", null },
+                    { 3, "Timothee Chalemet", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 30mins", "With dreams of opening a shop in a city renowned for its chocolate, a young and poor Willy Wonka discovers that the industry is run by a cartel of greedy chocolatiers.", "/posters/wonka.jpg", "2.0", "eeee", "Wonka", null },
+                    { 4, "David S. Goyer", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 13mins", "Blade, now a wanted man by the FBI, must join forces with the Nightstalkers to face his most challenging enemy yet: Dracula.", "/posters/blade3.jpg", "2.3", "ok", "Blade", null },
+                    { 5, "Alexander Skarsgård, Millie Bobbie Brown", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 33mins", "The epic next chapter in the cinematic Monsterverse pits two of the greatest icons in motion picture history against each other--the fearsome Godzilla and the mighty Kong--with humanity caught in the balance.", "/posters/godzillaa.jpg", "2.3", "ok only", "Godzilla", null },
+                    { 6, "Gong Yoo, Jung Yumi, Ma Dong Seok", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 43mins", "While a zombie virus breaks out in South Korea, passengers struggle to survive on the train from Seoul to Busan.", "/posters/traintobusan.jpg", "4.8", "nice", "Train To Busan", null },
+                    { 7, "Albert Brooks", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 23mins", "After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.", "/posters/nemo.jpg", "4.9", "amazing", "Nemo", null },
+                    { 8, "Ryan Reynolds", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1h 54mins", "A wisecracking mercenary gets experimented on and becomes immortal yet hideously scarred, and sets out to track down the man who ruined his looks.", "/posters/deadpool.jpg", "3.9", "not bad", "Deadpool", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Halls",
+                columns: new[] { "Id", "Capacity", "CinemaBranchId", "CreatedBy", "DateCreated", "DateUpdated", "Name", "ScreeningQuality", "UpdatedBy" },
+                values: new object[] { 1, 100, 1, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8249), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8250), "1", "IMAX", "System" });
+
+            migrationBuilder.InsertData(
+                table: "Staffs",
+                columns: new[] { "Id", "Address", "CinemaBranchId", "ContactNumber", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "Name", "PerformanceRating", "Role", "UpdatedBy" },
+                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", 1, "81207097", "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7856), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(7870), "John@platinumcity.com", "John", 5, "Manager", "System" });
+
+            migrationBuilder.InsertData(
+                table: "Seats",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "HallId", "SeatNo", "SeatTaken", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8406), 1, "A1", false, "System" },
+                    { 2, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8408), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8409), 1, "A2", false, "System" },
+                    { 3, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8410), 1, "A3", false, "System" },
+                    { 4, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8412), 1, "A4", false, "System" },
+                    { 5, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8413), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8414), 1, "A5", false, "System" },
+                    { 6, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8415), 1, "A6", false, "System" },
+                    { 7, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8417), 1, "A7", false, "System" },
+                    { 8, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8418), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8419), 1, "A8", false, "System" },
+                    { 9, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8420), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8421), 1, "A9", true, "System" },
+                    { 10, "System", new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422), new DateTime(2024, 2, 3, 16, 44, 35, 793, DateTimeKind.Local).AddTicks(8422), 1, "A10", true, "System" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -498,6 +588,16 @@ namespace PlatinumCityManagement.Server.Migrations
                 column: "HallId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Screenings_MovieId",
+                table: "Screenings",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Seats_HallId",
+                table: "Seats",
+                column: "HallId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Staffs_CinemaBranchId",
                 table: "Staffs",
                 column: "CinemaBranchId");
@@ -531,10 +631,10 @@ namespace PlatinumCityManagement.Server.Migrations
                 name: "Keys");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "PersistedGrants");
+                name: "Seats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -553,6 +653,9 @@ namespace PlatinumCityManagement.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Halls");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "CinemaBranches");

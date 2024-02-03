@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,24 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\CinemaBranches\**" />
-    <Compile Remove="Pages\Halls\**" />
-    <Compile Remove="Pages\Screenings\**" />
-    <Content Remove="Pages\CinemaBranches\**" />
-    <Content Remove="Pages\Halls\**" />
-    <Content Remove="Pages\Screenings\**" />
-    <EmbeddedResource Remove="Pages\CinemaBranches\**" />
-    <EmbeddedResource Remove="Pages\Halls\**" />
-    <EmbeddedResource Remove="Pages\Screenings\**" />
-    <None Remove="Pages\CinemaBranches\**" />
-    <None Remove="Pages\Halls\**" />
-    <None Remove="Pages\Screenings\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Pages\Counter.razor" />
     <Content Remove="Pages\FetchData.razor" />
     <Content Remove="Shared\SurveyPrompt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\CinemaBranches\Index.razor" />
+    <None Include="Pages\Halls\Index.razor" />
+    <None Include="Pages\Screenings\Index.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +24,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.14" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.14" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="10.2.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,19 @@
+﻿@page "/cinemaBranches/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Cinema Branches</h3>
+<br />
+<br />
+
+<FormComponent ButtonText="Create Cinema Branch" cinemaBranch="cinemaBranch" OnValidSubmit="@CreateCinemaBranch" />
+
+@code {
+	CinemaBranch cinemaBranch = new CinemaBranch();
+
+	private async Task CreateCinemaBranch()
+	{
+		await _client.PostAsJsonAsync(Endpoints.CinemaBranchesEndpoint, cinemaBranch);
+		_navManager.NavigateTo("/cinemaBranches/");
+	}
+}

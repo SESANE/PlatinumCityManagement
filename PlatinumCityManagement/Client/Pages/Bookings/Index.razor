@@ -5,6 +5,15 @@
 @attribute [Authorize]
 
 <h3 class="card-title">Bookings</h3>
+<br />
+<br />
+
+<a href="/bookings/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Bookings
+</a>
+<br />
+<br />
 
 @if (Bookings == null)
 {
@@ -15,15 +24,30 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>More</th>
+                <th>Staff name</th>
+                <th>Customer name </th>
+                <th>Booking Type</th>
+                <th>Total Price</th>
+                <th>No. of Seats</th>
+                <th>Seat No.</th>
+                <th>Date and Time</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var booking in Bookings)
             {
                 <tr>
+                    <td>@(booking.Staff?.Name ?? "N/A")</td> <!-- Handle null -->
+                    <td>@(booking.Customer?.Name ?? "N/A")</td> <!-- Handle null-->
+                    <td>@booking.BookingType</td>
+                    <td>@booking.TotalPrice</td>
+                    <td>@booking.SeatQty</td>
                     <td>@booking.SeatNo</td>
+                    <td>@booking.BookingDateTime.Date.ToString("dd/MM/yyyy")</td>
+                   
+     
+
                     <td>
                         <a href="/bookings/view/@booking.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -55,15 +79,36 @@ else
     {
         if (Bookings != null)
         {
-            var booking = Bookings.First(q => q.Id == bookingId);
-            var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {booking.SeatNo}?");
-            if (confirm)
+            var booking = Bookings.FirstOrDefault(q => q.Id == bookingId);
+            if (booking != null)
             {
-                await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
-                await OnInitializedAsync();
-
+                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {booking.SeatNo}?");
+                if (confirm)
+                {
+                    try
+                    {
+                        var response = await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Bookings.Remove(booking);
+                            StateHasChanged(); // To refresh the UI
+                        }
+                        else
+                        {
+                            // Handle the error, maybe show a message to the user
+                            var error = await response.Content.ReadAsStringAsync();
+                            Console.WriteLine(error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log or handle the exception
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }
+
 
 }

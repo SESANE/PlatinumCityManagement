@@ -1,11 +1,13 @@
 ﻿@page "/staffs/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Staffs</h3>
 <br />
-<a href="/vehicles/create" class="btn btn-secondary">
+<a href="/staffs/create" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Staff
 </a>
@@ -21,6 +23,11 @@ else
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Address</th>
+				<th>Contact Number</th>
+				<th>Role</th>
+				<th>Performance Rating</th>
+				<th>Cinema Branch</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -29,11 +36,16 @@ else
 			{
 				<tr>
 					<td>@staff.Name</td>
+					<td>@staff.Address</td>
+					<td>@staff.ContactNumber</td>
+					<td>@staff.Role</td>
+					<td>@staff.PerformanceRating</td>
+					<td>@staff.CinemaBranch.Name</td>
 					<td>
-						<a href="/makes/view/@staff.Id" class="btn btn-primary">
+						<a href="/staffs/view/@staff.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/makes/edit/@staff.Id" class="btn btn-warning">
+						<a href="/staffs/edit/@staff.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(staff.Id))">
@@ -51,6 +63,7 @@ else
 
 	protected async override Task OnInitializedAsync()
 	{
+		_interceptor.MonitorEvent();
 		Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
 	}
 
@@ -66,5 +79,10 @@ else
 				await OnInitializedAsync();
 			}
 		}
+	}
+
+	public void Dispose()
+	{
+		_interceptor.DisposeEvent();
 	}
 }

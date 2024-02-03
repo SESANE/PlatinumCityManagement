@@ -20,18 +20,23 @@ namespace PlatinumCityManagement.Server.Data
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<CinemaBranch> CinemaBranches { get; set; }
         public DbSet<Hall> Halls { get; set; }
-        public DbSet<Screening> Screenings { get; set; }
-
-
+		public DbSet<Seat> Seats { get; set; }
+		public DbSet<Screening> Screenings { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new BookingSeedConfiguration());
+			builder.ApplyConfiguration(new StaffSeedConfiguration());
+			builder.ApplyConfiguration(new HallSeedConfiguration());
+			builder.ApplyConfiguration(new SeatSeedConfiguration());
+			builder.ApplyConfiguration(new CinemaBranchSeedConfiguration());
+			builder.ApplyConfiguration(new BookingSeedConfiguration());
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new MovieSeedConfiguration());
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
+
         }
     }
 }
