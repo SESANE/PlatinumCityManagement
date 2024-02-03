@@ -1,0 +1,34 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@cinemaBranch" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Name: </label>
+			<div>
+				<InputText @bind-Value="@cinemaBranch.Name" class="form-control" />
+				<ValidationMessage For="@(() => cinemaBranch.Name)" />
+			</div>
+			<label>Address: </label>
+			<div>
+				<InputText @bind-Value="@cinemaBranch.Address" class="form-control" />
+				<ValidationMessage For="@(() => cinemaBranch.Address)" />
+			</div>
+		</div>
+	</fieldset>
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+	<BackToList Target="cinemaBranches" />
+</EditForm>
+
+@code {
+	[Parameter] public bool Disabled { get; set; } = false;
+	[Parameter] public CinemaBranch? cinemaBranch { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+}

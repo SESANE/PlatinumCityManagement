@@ -14,70 +14,70 @@ namespace PlatinumCityManagement.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StaffsController : ControllerBase
+    public class SeatsController : ControllerBase
     {
         //refactored
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //refactored
-        //public StaffsController(ApplicationDbContext context)
-        public StaffsController(IUnitOfWork unitOfWork)
+        //public SeatsController(ApplicationDbContext context)
+        public SeatsController(IUnitOfWork unitOfWork)
         {
             //refactored
             //_context = context;
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Staffs
+        // GET: api/Seats
         [HttpGet]
         //refactored
-        //public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
-        public async Task<IActionResult> GetStaffs()
+        //public async Task<ActionResult<IEnumerable<Seat>>> GetSeats()
+        public async Task<IActionResult> GetSeats()
         {
             //refactored
-            //if (_context.Staffs == null)
+            //if (_context.Seats == null)
             //{
             //    return NotFound();
             //}
-            //  return await _context.Staffs.ToListAsync();
-            var staffs = await _unitOfWork.Staffs.GetAll(includes: q => q.Include(x => x.CinemaBranch));
-            return Ok(staffs);
+            //  return await _context.Seats.ToListAsync();
+            var seats = await _unitOfWork.Seats.GetAll(includes: q => q.Include(x => x.Hall));
+            return Ok(seats);
         }
 
-        // GET: api/Staffs/5
+        // GET: api/Seats/5
         [HttpGet("{Id}")]
         //refactored
-        //public async Task<ActionResult<Staff>> GetStaff(int Id)
-        public async Task<IActionResult> GetStaffs(int Id)
+        //public async Task<ActionResult<Seat>> GetSeat(int Id)
+        public async Task<IActionResult> GetSeats(int Id)
         {
-            /*if (_context.Staffs == null)
+            /*if (_context.Seats == null)
             {
                 return NotFound();
             }*/
-            var staff = await _unitOfWork.Staffs.Get(q => q.Id == Id);
+            var seat = await _unitOfWork.Seats.Get(q => q.Id == Id);
 
-            if (staff == null)
+            if (seat == null)
             {
                 return NotFound();
             }
 
-            return Ok(staff);
+            return Ok(seat);
         }
 
-        // PUT: api/Staffs/5
+        // PUT: api/Seats/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkId=2123754
         [HttpPut("{Id}")]
-        public async Task<IActionResult> PutStaff(int Id, Staff staff)
+        public async Task<IActionResult> PutSeat(int Id, Seat seat)
         {
-            if (Id != staff.Id)
+            if (Id != seat.Id)
             {
                 return BadRequest();
             }
 
             //refactored
-            //_context.Entry(staff).State = EntityState.Modified;
-            _unitOfWork.Staffs.Update(staff);
+            //_context.Entry(seat).State = EntityState.Modified;
+            _unitOfWork.Seats.Update(seat);
 
             try
             {
@@ -88,8 +88,8 @@ namespace PlatinumCityManagement.Server.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 //refactored
-                //if (!StaffExists(Id))
-                if (!await StaffExists(Id))
+                //if (!SeatExists(Id))
+                if (!await SeatExists(Id))
                 {
                     return NotFound();
                 }
@@ -102,57 +102,57 @@ namespace PlatinumCityManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Staffs
+        // POST: api/Seats
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkId=2123754
         [HttpPost]
-        public async Task<ActionResult<Staff>> PostStaff(Staff staff)
+        public async Task<ActionResult<Seat>> PostSeat(Seat seat)
         {
             //refactored
-            /*if (_context.Staffs == null)
+            /*if (_context.Seats == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Staffs'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Seats'  is null.");
             }
-              _context.Staffs.Add(staff);
+              _context.Seats.Add(seat);
               await _context.SaveChangesAsync();*/
-            await _unitOfWork.Staffs.Insert(staff);
+            await _unitOfWork.Seats.Insert(seat);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetStaff", new { staff.Id }, staff);
+            return CreatedAtAction("GetSeat", new { seat.Id }, seat);
         }
 
-        // DELETE: api/Staffs/5
+        // DELETE: api/Seats/5
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteStaff(int Id)
+        public async Task<IActionResult> DeleteSeat(int Id)
         {
-            /*if (_context.Staffs == null)
+            /*if (_context.Seats == null)
             {
                 return NotFound();
             }*/
             //refactored
-            //var staff = await _context.Staffs.FindAsync(Id);
-            var staff = await _unitOfWork.Staffs.Get(q => q.Id == Id);
-            if (staff == null)
+            //var seat = await _context.Seats.FindAsync(Id);
+            var seat = await _unitOfWork.Seats.Get(q => q.Id == Id);
+            if (seat == null)
             {
                 return NotFound();
             }
 
             //refactored
-            //_context.Staffs.Remove(staff);
+            //_context.Seats.Remove(seat);
             //await _context.SaveChangesAsync();
-            await _unitOfWork.Staffs.Delete(Id);
+            await _unitOfWork.Seats.Delete(Id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
         //refactored
-        //private bool StaffExists(int Id)
-        private async Task<bool> StaffExists(int Id)
+        //private bool SeatExists(int Id)
+        private async Task<bool> SeatExists(int Id)
         {
             //refactored
-            //return (_context.Staffs?.Any(e => e.Id == Id)).GetValueOrDefault();
-            var staff = await _unitOfWork.Staffs.Get(q => q.Id == Id);
-            return staff != null;
+            //return (_context.Seats?.Any(e => e.Id == Id)).GetValueOrDefault();
+            var seat = await _unitOfWork.Seats.Get(q => q.Id == Id);
+            return seat != null;
         }
     }
 }

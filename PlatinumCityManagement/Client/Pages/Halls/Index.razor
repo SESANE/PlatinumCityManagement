@@ -1,9 +1,19 @@
 ﻿@page "/halls/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @attribute [Authorize]
 
 <h3 class="card-title">Halls</h3>
+
+<br />
+<a href="/halls/create" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Hall
+</a>
+<br />
+<br />
 
 @if (Halls == null)
 {
@@ -14,7 +24,11 @@ else
 	<table class="table table-dark">
 		<thead>
 			<tr>
-				<th>Hall Type</th>
+				<th>Hall Name</th>
+				<th>Cinema Branch Name</th>
+				<th>Screening Quality</th>
+				<th>Capacity</th>
+				<th>Available Seats</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -22,12 +36,25 @@ else
 			@foreach (var hall in Halls)
 			{
 				<tr>
-					<td>@hall.Type</td>
+					<td>@hall.Name</td>
+					<td>@hall.CinemaBranch.Name</td>
+					<td>@hall.ScreeningQuality</td>
+					<td>@hall.Capacity</td>
 					<td>
-						<a href="/makes/view/@hall.Id" class="btn btn-primary">
+						@foreach (var seat in Seats)
+						{
+							if (seat.HallId == hall.Id && seat.SeatTaken == false)
+							{
+								count += 1;
+							}
+						}
+						@count
+					</td>
+					<td>
+						<a href="/halls/view/@hall.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/makes/edit/@hall.Id" class="btn btn-warning">
+						<a href="/halls/edit/@hall.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(hall.Id))">
@@ -42,10 +69,14 @@ else
 
 @code{
 	private List<Hall>? Halls;
+	private List<Seat>? Seats;
+	int count = 0;
 
 	protected async override Task OnInitializedAsync()
 	{
+		_interceptor.MonitorEvent();
 		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
+		Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
 	}
 
 	async Task Delete(int hallId)
@@ -53,12 +84,17 @@ else
 		if(Halls != null)
 		{
 			var hall = Halls.First(q => q.Id == hallId);
-			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{hall.Type}?");
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{hall.Name}?");
 			if (confirm)
 			{
 				await _client.DeleteAsync($"{Endpoints.HallsEndpoint}/{hallId}");
 				await OnInitializedAsync();
 			}
 		}
+	}
+
+	public void Dispose()
+	{
+		_interceptor.DisposeEvent();
 	}
 }

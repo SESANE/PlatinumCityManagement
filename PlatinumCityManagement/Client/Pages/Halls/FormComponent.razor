@@ -1,0 +1,60 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@hall" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Name: </label>
+			<div>
+				<InputText @bind-Value="@hall.Name" class="form-control" />
+				<ValidationMessage For="@(() => hall.Name)" />
+			</div>
+			<label>Screening Quality: </label>
+			<div>
+				<InputText @bind-Value="@hall.ScreeningQuality" class="form-control" />
+				<ValidationMessage For="@(() => hall.ScreeningQuality)" />
+			</div>
+			<label>Capacity: </label>
+			<div>
+				<InputNumber @bind-Value="@hall.Capacity" class="form-control" />
+				<ValidationMessage For="@(() => hall.Capacity)" />
+			</div>
+			<label>Cinema Branch: </label>
+			<div>
+				<InputSelect @bind-Value="@hall.CinemaBranchId" class="form-control">
+					<option value="">-- Select Cinema Branch --</option>
+					@if (CinemaBranches != null)
+					{
+						foreach (var cinemaBranch in CinemaBranches)
+						{
+							<option value="@cinemaBranch.Id">@cinemaBranch.Name</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => hall.CinemaBranchId)" />
+			</div>
+		</div>
+    </fieldset>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+	<BackToList Target="halls" />
+
+</EditForm>
+
+@code {
+	[Parameter] public bool Disabled { get; set; } = false;
+	[Parameter] public Hall? hall { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	private IList<CinemaBranch>? CinemaBranches;
+
+	protected async override Task OnInitializedAsync()
+	{
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.CinemaBranchesEndpoint}");
+	}
+}
