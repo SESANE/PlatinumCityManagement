@@ -12,8 +12,8 @@ using PlatinumCityManagement.Server.Data;
 namespace PlatinumCityManagement.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240202094739_lol")]
-    partial class lol
+    [Migration("20240203022633_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -822,8 +822,8 @@ namespace PlatinumCityManagement.Server.Migrations
                             Address = "499B Tampines Ave 9, #08-238, Singapore 522499",
                             ContactNumber = "81207097",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 2, 17, 47, 39, 284, DateTimeKind.Local).AddTicks(9003),
-                            DateUpdated = new DateTime(2024, 2, 2, 17, 47, 39, 284, DateTimeKind.Local).AddTicks(9020),
+                            DateCreated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1413),
+                            DateUpdated = new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1424),
                             EmailAddress = "John@platinumcity.com",
                             Name = "John",
                             PerformanceRating = 5,

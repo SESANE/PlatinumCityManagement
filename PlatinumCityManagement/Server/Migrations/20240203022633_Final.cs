@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PlatinumCityManagement.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class lol : Migration
+    public partial class Final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -424,7 +424,7 @@ namespace PlatinumCityManagement.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "Address", "CinemaBranchId", "ContactNumber", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "Name", "PerformanceRating", "Role", "UpdatedBy" },
-                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", null, "81207097", "System", new DateTime(2024, 2, 2, 17, 47, 39, 284, DateTimeKind.Local).AddTicks(9003), new DateTime(2024, 2, 2, 17, 47, 39, 284, DateTimeKind.Local).AddTicks(9020), "John@platinumcity.com", "John", 5, "Manager", "System" });
+                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", null, "81207097", "System", new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1413), new DateTime(2024, 2, 3, 10, 26, 33, 40, DateTimeKind.Local).AddTicks(1424), "John@platinumcity.com", "John", 5, "Manager", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
