@@ -1,0 +1,64 @@
+﻿@page "/cinemaBranches/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">CinemaBranches</h3>
+
+@if (CinemaBranches == null)
+{
+	<div class="alert alert-info">Loading CinemaBranches...</div>
+}
+else
+{
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var cinemaBranch in CinemaBranches)
+			{
+				<tr>
+					<td>@cinemaBranch.Name</td>
+					<td>
+						<a href="/makes/view/@cinemaBranch.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/makes/edit/@cinemaBranch.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(cinemaBranch.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code{
+	private List<CinemaBranch>? CinemaBranches;
+
+	protected async override Task OnInitializedAsync()
+	{
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.CinemaBranchesEndpoint}");
+	}
+
+	async Task Delete(int cinemaBranchId)
+	{
+		if(CinemaBranches != null)
+		{
+			var cinemaBranch = CinemaBranches.First(q => q.Id == cinemaBranchId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{cinemaBranch.Name}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.CinemaBranchesEndpoint}/{cinemaBranchId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+}
