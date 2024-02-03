@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatinumCityManagement.Server", "PlatinumCityManagement\Server\PlatinumCityManagement.Server.csproj", "{CE8C503D-540F-4A1B-9CC6-840F2F3AE77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlatinumCityManagement.Server", "PlatinumCityManagement\Server\PlatinumCityManagement.Server.csproj", "{CE8C503D-540F-4A1B-9CC6-840F2F3AE77C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatinumCityManagement.Client", "PlatinumCityManagement\Client\PlatinumCityManagement.Client.csproj", "{CEE2A638-2A4F-4461-82CF-14C6184DEA5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlatinumCityManagement.Client", "PlatinumCityManagement\Client\PlatinumCityManagement.Client.csproj", "{CEE2A638-2A4F-4461-82CF-14C6184DEA5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatinumCityManagement.Shared", "PlatinumCityManagement\Shared\PlatinumCityManagement.Shared.csproj", "{6AFB642C-6239-4CE6-99FA-6EFCC9D3D8B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlatinumCityManagement.Shared", "PlatinumCityManagement\Shared\PlatinumCityManagement.Shared.csproj", "{6AFB642C-6239-4CE6-99FA-6EFCC9D3D8B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

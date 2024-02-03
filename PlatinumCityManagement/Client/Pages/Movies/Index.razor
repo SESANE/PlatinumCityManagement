@@ -1,0 +1,109 @@
+﻿@page "/movies/"
+
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Movies</h3>
+
+<a href="/movies/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Movies
+</a>
+<br />
+<br />
+
+@if (Movies == null)
+{
+<div class="alert alert-info">Loading Movies..</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+               <th>Title</th>
+               <th>Rating</th>
+               <th>Duration</th>
+               <th>Description</th>
+               <th>Cast</th>
+               <th>Review</th>
+               <th>Poster</th>
+               <th>More</th>
+           </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Movies)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Rating</td>
+                    <td>@movie.Duration</td>
+                    <td>@movie.MovieDescription</td>
+                    <td>@movie.Cast</td>
+                    <td>@movie.Review</td>
+                    <td>@movie.Poster</td>
+                    <td>
+                        <a href="/movies/view/@movie.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/movies/edit/@movie.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="(() => Delete(movie.Id))">
+                            <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+}
+
+@code {
+    private List<Movie>? Movies;
+
+    protected async override Task OnInitializedAsync()
+
+    {
+        Movies = await _client.GetFromJsonAsync<List<Movie>>($"{Endpoints.MoviesEndpoint}");
+    }
+
+    async Task Delete(int movieId)
+    {
+        if (Movies != null)
+        {
+            var movie = Movies.FirstOrDefault(q => q.Id == movieId);
+            if (movie != null)
+            {
+                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {movie.Title}?");
+                if (confirm)
+                {
+                    try
+                    {
+                        var response = await _client.DeleteAsync($"{Endpoints.MoviesEndpoint}/{movieId}");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Movies.Remove(movie);
+                            StateHasChanged(); // To refresh the UI
+                        }
+                        else
+                        {
+                            // Handle the error, maybe show a message to the user
+                            var error = await response.Content.ReadAsStringAsync();
+                            Console.WriteLine(error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log or handle the exception
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+    }
+
+
+}

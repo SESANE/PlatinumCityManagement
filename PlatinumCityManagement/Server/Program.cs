@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using PlatinumCityManagement.Server.Data;
 using PlatinumCityManagement.Server.Models;
 using Microsoft.AspNetCore.Identity;
+using PlatinumCityManagement.Server.Repository;
+using PlatinumCityManagement.Server.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,11 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
