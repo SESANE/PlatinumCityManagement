@@ -1,25 +1,25 @@
 ﻿@using PlatinumCityManagement.Client.Components
-@page "/customers/edit/{id:int}"
+@page "/movies/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>Edit Customer</h3>
+<h3>Edit Movie</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditCustomer" customer="customer" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditMovie" movie="movie" />
 
 @code {
     [Parameter] public int id { get; set; }
-    Customer? customer = new Customer();
+    Movie? movie = new Movie();
 
     protected async override Task OnParametersSetAsync()
     {
-        customer = await _client.GetFromJsonAsync<Customer>($"{Endpoints.CustomersEndpoint}/{id}");
+        movie = await _client.GetFromJsonAsync<Movie>($"{Endpoints.MoviesEndpoint}/{id}");
     }
 
-    async Task EditCustomer()
+    async Task EditMovie()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.CustomersEndpoint}/{id}", customer);
-        _navManager.NavigateTo("/customers/");
+        await _client.PutAsJsonAsync($"{Endpoints.MoviesEndpoint}/{id}", movie);
+        _navManager.NavigateTo("/movies/");
     }
 
 }

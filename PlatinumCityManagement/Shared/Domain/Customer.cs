@@ -10,7 +10,7 @@ namespace PlatinumCityManagement.Shared.Domain
     public class Customer : BaseDomainModel
     {
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public DateTime DOB { get; set; }
         public string? Address { get; set; }
         public string? EmailAddress { get; set; }
