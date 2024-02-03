@@ -1,0 +1,14 @@
+﻿@page "/cinemaBranches/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent cinemaBranch="cinemaBranch" Disabled="true" />
+@code {
+	[Parameter] public int id { get; set; }
+	CinemaBranch? cinemaBranch = new CinemaBranch();
+	protected async override Task OnParametersSetAsync()
+	{
+		cinemaBranch = await
+		_client.GetFromJsonAsync<CinemaBranch>($"{Endpoints.CinemaBranchesEndpoint}/{id}");
+	}
+}

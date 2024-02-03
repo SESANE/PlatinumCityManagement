@@ -1,0 +1,26 @@
+﻿@page "/halls/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Halls</h3>
+<br />
+<br />
+
+<FormComponent ButtonText="Create Hall" hall="hall" OnValidSubmit="@CreateHall" />
+
+@code {
+	Hall hall = new Hall();
+
+	private IList<CinemaBranch>? CinemaBranches;
+
+	protected async override Task OnInitializedAsync()
+	{
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.CinemaBranchesEndpoint}");
+	}
+
+	private async Task CreateHall()
+	{
+		await _client.PostAsJsonAsync(Endpoints.HallsEndpoint, hall);
+		_navManager.NavigateTo("/halls/");
+	}
+}

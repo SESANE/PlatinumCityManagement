@@ -1,0 +1,22 @@
+﻿@page "/cinemaBranches/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Cinema Branch</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditCinemaBranch" cinemaBranch="cinemaBranch" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	CinemaBranch? cinemaBranch = new CinemaBranch();
+	protected async override Task OnInitializedAsync()
+	{
+		cinemaBranch = await _client.GetFromJsonAsync<CinemaBranch>($"{Endpoints.CinemaBranchesEndpoint}/{id}");
+	}
+
+	private async Task EditCinemaBranch()
+	{
+		await _client.PutAsJsonAsync($"{Endpoints.CinemaBranchesEndpoint}/{id}", cinemaBranch);
+		_navManager.NavigateTo("/cinemaBranches/");
+	}
+}

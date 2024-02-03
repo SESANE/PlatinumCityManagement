@@ -1,0 +1,31 @@
+﻿@page "/screenings/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Screenings</h3>
+<br />
+<br />
+
+<FormComponent ButtonText="Create Screening" screening="screening" OnValidSubmit="@CreateScreening" />
+
+@code {
+	Screening screening = new Screening();
+
+	private IList<CinemaBranch>? CinemaBranches;
+	private IList<Hall>? Halls;
+	private IList<Movie>? Movies;
+
+	protected async override Task OnInitializedAsync()
+	{
+		CinemaBranches = await _client.GetFromJsonAsync<List<CinemaBranch>>($"{Endpoints.CinemaBranchesEndpoint}");
+		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
+		Movies = await _client.GetFromJsonAsync<List<Movie>>($"{Endpoints.MoviesEndpoint}");
+
+	}
+
+	private async Task CreateScreening()
+	{
+		await _client.PostAsJsonAsync(Endpoints.ScreeningsEndpoint, screening);
+		_navManager.NavigateTo("/screenings/");
+	}
+}
