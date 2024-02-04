@@ -23,7 +23,7 @@ namespace PlatinumCityManagement.Shared.Domain
         public int SeatQty { get; set; }
 
         [Required(ErrorMessage = "Seat number is required")]
-        [StringLength(10, ErrorMessage = "Seat number cannot exceed 10 characters")]
+        [StringLength(10, ErrorMessage = "Seat number cannot exceed 3 characters")]
         public string SeatNo { get; set; }
 
         [Required]
