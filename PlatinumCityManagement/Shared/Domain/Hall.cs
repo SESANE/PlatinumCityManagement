@@ -14,6 +14,7 @@ namespace PlatinumCityManagement.Shared.Domain
         public int? Capacity { get; set; }
         public int? CinemaBranchId { get; set; }
         public virtual CinemaBranch? CinemaBranch { get; set; }
+
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
 			//throw new NotImplementedException();

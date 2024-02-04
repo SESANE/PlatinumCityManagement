@@ -17,19 +17,19 @@
 				<ValidationMessage For="@(() => seat.SeatTaken)" />
 			</div>
 			
-			<label>Cinema Branch: </label>
+			<label>Screening: </label>
 			<div>
-				<InputSelect @bind-Value="@seat.HallId" class="form-control">
-					<option value="">-- Select hall  --</option>
-					@if (Halls != null)
+				<InputSelect @bind-Value="@seat.ScreeningId" class="form-control">
+					<option value="">-- Select screening  --</option>
+					@if (Screenings != null)
 					{
-						foreach (var hall in Halls)
+						foreach (var screening in Screenings)
 						{
-							<option value="@hall.Id">@hall.Name</option>
+							<option value="@screening.Id">@screening.Movie.Title</option>
 						}
 					}
 				</InputSelect>
-				<ValidationMessage For="@(() => seat.HallId)" />
+				<ValidationMessage For="@(() => seat.ScreeningId)" />
 			</div>
 		</div>
     </fieldset>
@@ -39,7 +39,7 @@
             @ButtonText
         </button>
     }
-	<BackToList Target="seats" />
+	<BackToList Target="cinemaBranches" />
 
 </EditForm>
 
@@ -48,10 +48,10 @@
 	[Parameter] public Seat? seat { get; set; }
 	[Parameter] public string ButtonText { get; set; } = "Save";
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
-	private IList<Hall>? Halls;
+	private IList<Screening>? Screenings;
 
 	protected async override Task OnInitializedAsync()
 	{
-		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
+		Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
 	}
 }

@@ -13,8 +13,8 @@ namespace PlatinumCityManagement.Shared.Domain
         [RegularExpression(@"^[A-Za-z0-9]+$", ErrorMessage = "The seat number must be alphanumeric.")]
         public string? SeatNo { get; set; }
         public bool SeatTaken { get; set; }
-		public int HallId { get; set; }
-		public virtual Hall? Hall { get; set; }
+		public int? ScreeningId { get; set; }
+		public virtual Screening? Screening { get; set; }
 
 	}
 }

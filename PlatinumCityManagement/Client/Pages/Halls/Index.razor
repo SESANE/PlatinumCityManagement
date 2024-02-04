@@ -28,7 +28,6 @@ else
 				<th>Cinema Branch Name</th>
 				<th>Screening Quality</th>
 				<th>Capacity</th>
-				<th>Available Seats</th>
 				<th>Screenings</th>
 				<th>Actions</th>
 			</tr>
@@ -43,19 +42,6 @@ else
 						<td>@hall.CinemaBranch.Name</td>
 						<td>@hall.ScreeningQuality</td>
 						<td>@hall.Capacity</td>
-						<td>
-							@{
-								count = 0;
-								foreach (var seat in Seats)
-								{
-									if (seat.HallId == hall.Id && seat.SeatTaken == false)
-									{
-										count += 1;
-									}
-								}
-							}
-							@count
-						</td>
 						<td>
 							<a href="/cinemaBranches/@cinemaBranchId/halls/@hall.Id/screenings" class="btn btn-primary">
 								View Screenings
