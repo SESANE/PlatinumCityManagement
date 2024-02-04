@@ -1,4 +1,4 @@
-﻿@page "/halls/"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @inject HttpInterceptorService _interceptor
@@ -8,7 +8,7 @@
 <h3 class="card-title">Halls</h3>
 
 <br />
-<a href="/halls/create" class="btn btn-secondary">
+<a href="/cinemaBranches/@cinemaBranchId/halls/create/" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Hall
 </a>
@@ -29,45 +29,58 @@ else
 				<th>Screening Quality</th>
 				<th>Capacity</th>
 				<th>Available Seats</th>
+				<th>Screenings</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var hall in Halls)
 			{
-				<tr>
-					<td>@hall.Name</td>
-					<td>@hall.CinemaBranch.Name</td>
-					<td>@hall.ScreeningQuality</td>
-					<td>@hall.Capacity</td>
-					<td>
-						@foreach (var seat in Seats)
-						{
-							if (seat.HallId == hall.Id && seat.SeatTaken == false)
-							{
-								count += 1;
+				if (hall.CinemaBranchId == cinemaBranchId)
+				{
+					<tr>
+						<td>@hall.Name</td>
+						<td>@hall.CinemaBranch.Name</td>
+						<td>@hall.ScreeningQuality</td>
+						<td>@hall.Capacity</td>
+						<td>
+							@{
+								count = 0;
+								foreach (var seat in Seats)
+								{
+									if (seat.HallId == hall.Id && seat.SeatTaken == false)
+									{
+										count += 1;
+									}
+								}
 							}
-						}
-						@count
-					</td>
-					<td>
-						<a href="/halls/view/@hall.Id" class="btn btn-primary">
-							<span class="oi oi-book"></span>
-						</a>
-						<a href="/halls/edit/@hall.Id" class="btn btn-warning">
-							<span class="oi oi-pencil"></span>
-						</a>
-						<button class="btn btn-danger" @onclick="@(()=>Delete(hall.Id))">
-							<span class="oi oi-delete"></span>
-						</button>
-					</td>
-				</tr>
+							@count
+						</td>
+						<td>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/@hall.Id/screenings" class="btn btn-primary">
+								View Screenings
+							</a>
+						</td>
+						<td>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/view/@hall.Id" class="btn btn-primary">
+								<span class="oi oi-book"></span>
+							</a>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/edit/@hall.Id" class="btn btn-warning">
+								<span class="oi oi-pencil"></span>
+							</a>
+							<button class="btn btn-danger" @onclick="@(()=>Delete(hall.Id))">
+								<span class="oi oi-delete"></span>
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
 }
 
 @code{
+	[Parameter] public int cinemaBranchId { get; set; }
 	private List<Hall>? Halls;
 	private List<Seat>? Seats;
 	int count = 0;
