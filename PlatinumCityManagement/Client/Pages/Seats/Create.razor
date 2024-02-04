@@ -1,4 +1,4 @@
-﻿@page "/seats/create/"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/{screeningId:int}/seats/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -9,15 +9,18 @@
 <FormComponent ButtonText="Create Seat" seat="seat" OnValidSubmit="@CreateSeat" />
 
 @code {
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+	[Parameter] public int screeningId { get; set; }
+
 	Seat seat = new Seat();
 
-	
 	private IList<Hall>? Halls;
-	
+
 
 	protected async override Task OnInitializedAsync()
 	{
-		
+
 		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
 
 
