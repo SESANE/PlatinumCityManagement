@@ -17,11 +17,6 @@
     <None Include="Pages\CinemaBranches\Index.razor" />
     <None Include="Pages\Halls\Index.razor" />
     <None Include="Pages\Screenings\Index.razor" />
-    <None Include="Pages\Seats\Create.razor" />
-    <None Include="Pages\Seats\Edit.razor" />
-    <None Include="Pages\Seats\FormComponent.razor" />
-    <None Include="Pages\Seats\Index.razor" />
-    <None Include="Pages\Seats\View.razor" />
   </ItemGroup>
 
   <ItemGroup>
