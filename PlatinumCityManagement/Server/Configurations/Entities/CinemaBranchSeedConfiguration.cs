@@ -19,8 +19,30 @@ namespace PlatinumCityManagement.Server.Configurations.Entities
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
                     UpdatedBy = "System"
-                }
-            );
+                },
+				new CinemaBranch
+				{
+					Id = 2,
+					Name = "Platinum City Bedok",
+					Address = "Bedok",
+					HallQuantity = 10,
+					DateCreated = DateTime.Now,
+					DateUpdated = DateTime.Now,
+					CreatedBy = "System",
+					UpdatedBy = "System"
+				},
+				new CinemaBranch
+				{
+					Id = 3,
+					Name = "Platinum City Jewel",
+					Address = "Jewel Changi Airport",
+					HallQuantity = 8,
+					DateCreated = DateTime.Now,
+					DateUpdated = DateTime.Now,
+					CreatedBy = "System",
+					UpdatedBy = "System"
+				}
+			);
         }
     }
 }

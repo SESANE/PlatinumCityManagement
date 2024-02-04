@@ -9,14 +9,14 @@
 
 <a href="/cinemaBranches/create" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
-	Create New CinemaBranches
+	Create New Cinema Branches
 </a>
 <br />
 <br />
 
 @if (CinemaBranches == null)
 {
-	<div class="alert alert-info">Loading CinemaBranches...</div>
+	<div class="alert alert-info">Loading Cinema Branches...</div>
 }
 else
 {
@@ -27,6 +27,7 @@ else
 				<th>Address</th>
 				<th>Hall Quantity</th>
 				<th>Actions</th>
+				<th>Halls</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +37,11 @@ else
 					<td>@cinemaBranch.Name</td>
 					<td>@cinemaBranch.Address</td>
 					<td>@cinemaBranch.HallQuantity</td>
+					<td>
+						<a href="/cinemaBranches/@cinemaBranch.Id/halls" class="btn btn-primary">
+							View Halls
+						</a>
+					</td>
 					<td>
 						<a href="/cinemaBranches/view/@cinemaBranch.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
