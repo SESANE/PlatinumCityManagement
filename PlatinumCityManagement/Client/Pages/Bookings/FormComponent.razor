@@ -6,6 +6,8 @@
     <ValidationSummary />
 
     <fieldset disabled="@Disabled">
+
+       
         <div class="form-group">
             <label>Staff  </label>
             <div>
@@ -107,10 +109,13 @@
 
     private IList<Staff>? Staffs;
     private IList<Customer>? Customers;
+   
 
     protected async override Task OnInitializedAsync()
     {
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+       
     }
 }
+

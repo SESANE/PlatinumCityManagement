@@ -5,6 +5,7 @@
 @attribute [Authorize]
 
 <h3 class="card-title">Movies</h3>
+<input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by Title" class="form-control mb-3" />
 
 <a href="/movies/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -33,7 +34,7 @@ else
            </tr>
     </thead>
     <tbody>
-        @foreach (var movie in Movies)
+            @foreach (var movie in Movies.Where(m => string.IsNullOrEmpty(searchTerm) || m.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
         {
             <tr>
                 <td>@movie.Title</td>
@@ -63,6 +64,7 @@ else
 
 @code {
     private List<Movie>? Movies;
+    private string searchTerm;
 
     protected async override Task OnInitializedAsync()
 

@@ -5,8 +5,7 @@
 @attribute [Authorize]
 
 <h3 class="card-title">Customers</h3>
-<br />
-<br />
+<input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by Name" class="form-control mb-3" />
 
 <a href="/customers/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -38,7 +37,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Customers)
+            @foreach (var customer in Customers.Where(c => string.IsNullOrEmpty(searchTerm) || c.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
             {
                 <tr>
                     <td>@customer.Name</td>
@@ -68,6 +67,7 @@ else
 
 @code {
     private List<Customer>? Customers;
+    private string searchTerm;
 
     protected async override Task OnInitializedAsync()
 
@@ -91,18 +91,18 @@ else
                         if (response.IsSuccessStatusCode)
                         {
                             Customers.Remove(customer);
-                            StateHasChanged(); // To refresh the UI
+                            StateHasChanged(); //refresh the UI
                         }
                         else
                         {
-                            // Handle the error, maybe show a message to the user
+                            //handle the error, maybe show a message to the user
                             var error = await response.Content.ReadAsStringAsync();
                             Console.WriteLine(error);
                         }
                     }
                     catch (Exception ex)
                     {
-                        // Log or handle the exception
+                        //log or handle the exception
                         Console.WriteLine(ex.Message);
                     }
                 }
