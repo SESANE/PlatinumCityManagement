@@ -32,8 +32,6 @@ namespace PlatinumCityManagement.Shared.Domain
         [StringLength(2000, ErrorMessage = "The review must be less than 2000 characters.")]
         public string? Review { get; set; }
 
-        // Assuming the poster is a URL to an image, you may want to validate it as such.
-        [Url(ErrorMessage = "You must enter a valid URL for the poster.")]
         [StringLength(500, ErrorMessage = "The URL for the poster must be less than 500 characters.")]
         public string? Poster { get; set; }
     }
