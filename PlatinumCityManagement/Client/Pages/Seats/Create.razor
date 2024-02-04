@@ -1,0 +1,34 @@
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/{screeningId:int}/seats/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Seats</h3>
+<br />
+<br />
+
+<FormComponent ButtonText="Create Seat" seat="seat" OnValidSubmit="@CreateSeat" />
+
+@code {
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+	[Parameter] public int screeningId { get; set; }
+
+	Seat seat = new Seat();
+
+	private IList<Hall>? Halls;
+	
+
+	protected async override Task OnInitializedAsync()
+	{
+		
+		Halls = await _client.GetFromJsonAsync<List<Hall>>($"{Endpoints.HallsEndpoint}");
+
+
+	}
+
+	private async Task CreateSeat()
+	{
+		await _client.PostAsJsonAsync(Endpoints.SeatsEndpoint, seat);
+		_navManager.NavigateTo("/seats/");
+	}
+}
