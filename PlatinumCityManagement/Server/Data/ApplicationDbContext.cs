@@ -32,10 +32,9 @@ namespace PlatinumCityManagement.Server.Data
 			builder.ApplyConfiguration(new HallSeedConfiguration());
 			builder.ApplyConfiguration(new SeatSeedConfiguration());
 			builder.ApplyConfiguration(new CinemaBranchSeedConfiguration());
-			builder.ApplyConfiguration(new BookingSeedConfiguration());
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new MovieSeedConfiguration());
-            builder.ApplyConfiguration(new StaffSeedConfiguration());
+            
 
         }
     }

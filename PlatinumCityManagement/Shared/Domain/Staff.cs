@@ -27,9 +27,8 @@ namespace PlatinumCityManagement.Shared.Domain
 		public int CinemaBranchId {  get; set; }
 		public virtual CinemaBranch? CinemaBranch { get; set; }
         
-		[Required]
-		public int? CinemaBranchId {  get; set; }
-		public virtual CinemaBranch? CinemaBranch { get; set; }
+		
+		
         
     }
 }
