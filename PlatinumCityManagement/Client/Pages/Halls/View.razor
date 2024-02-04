@@ -1,15 +1,14 @@
-﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/view/{hallId:int}"
+﻿@page "/halls/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 <h3>View</h3>
 <FormComponent hall="hall" Disabled="true" />
 @code {
-	[Parameter] public int hallId { get; set; }
-	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int id { get; set; }
 	Hall? hall = new Hall();
 	protected async override Task OnParametersSetAsync()
 	{
 		hall = await
-		_client.GetFromJsonAsync<Hall>($"{Endpoints.HallsEndpoint}/{hallId}");
+		_client.GetFromJsonAsync<Hall>($"{Endpoints.HallsEndpoint}/{id}");
 	}
 }

@@ -465,32 +465,10 @@ namespace PlatinumCityManagement.Server.Migrations
                             Id = 1,
                             Address = "Tampines",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1458),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1459),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5318),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(5319),
                             HallQuantity = 9,
                             Name = "Platinum City Tampines",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Bedok",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1462),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1462),
-                            HallQuantity = 10,
-                            Name = "Platinum City Bedok",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "Jewel Changi Airport",
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1464),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1464),
-                            HallQuantity = 8,
-                            Name = "Platinum City Jewel",
                             UpdatedBy = "System"
                         });
                 });
@@ -615,34 +593,10 @@ namespace PlatinumCityManagement.Server.Migrations
                             Capacity = 100,
                             CinemaBranchId = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1048),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1049),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4649),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4650),
                             Name = "1",
                             ScreeningQuality = "IMAX",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 90,
-                            CinemaBranchId = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1051),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1052),
-                            Name = "1",
-                            ScreeningQuality = "DOLBY ATMOS",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 80,
-                            CinemaBranchId = 3,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1054),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1054),
-                            Name = "1",
-                            ScreeningQuality = "HD",
                             UpdatedBy = "System"
                         });
                 });
@@ -880,8 +834,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1234),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1235),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4961),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4962),
                             HallId = 1,
                             SeatNo = "A1",
                             SeatTaken = false,
@@ -891,8 +845,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1237),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1238),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4965),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4966),
                             HallId = 1,
                             SeatNo = "A2",
                             SeatTaken = false,
@@ -902,8 +856,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1239),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1240),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4968),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4969),
                             HallId = 1,
                             SeatNo = "A3",
                             SeatTaken = false,
@@ -913,8 +867,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 4,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1242),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1242),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4971),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4972),
                             HallId = 1,
                             SeatNo = "A4",
                             SeatTaken = false,
@@ -924,8 +878,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 5,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1244),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1244),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4974),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4975),
                             HallId = 1,
                             SeatNo = "A5",
                             SeatTaken = false,
@@ -935,8 +889,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 6,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1246),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1246),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4977),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4978),
                             HallId = 1,
                             SeatNo = "A6",
                             SeatTaken = false,
@@ -946,8 +900,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 7,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1248),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1248),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4980),
                             HallId = 1,
                             SeatNo = "A7",
                             SeatTaken = false,
@@ -957,8 +911,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 8,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1250),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1250),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4982),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4983),
                             HallId = 1,
                             SeatNo = "A8",
                             SeatTaken = false,
@@ -968,8 +922,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 9,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1252),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1252),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4985),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4986),
                             HallId = 1,
                             SeatNo = "A9",
                             SeatTaken = true,
@@ -979,8 +933,8 @@ namespace PlatinumCityManagement.Server.Migrations
                         {
                             Id = 10,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1255),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(1255),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(4988),
                             HallId = 1,
                             SeatNo = "A10",
                             SeatTaken = true,
@@ -1048,8 +1002,8 @@ namespace PlatinumCityManagement.Server.Migrations
                             CinemaBranchId = 1,
                             ContactNumber = "81207097",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(731),
-                            DateUpdated = new DateTime(2024, 2, 4, 11, 28, 47, 708, DateTimeKind.Local).AddTicks(745),
+                            DateCreated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3932),
+                            DateUpdated = new DateTime(2024, 2, 3, 17, 59, 6, 317, DateTimeKind.Local).AddTicks(3945),
                             EmailAddress = "John@platinumcity.com",
                             Name = "John",
                             PerformanceRating = 5,

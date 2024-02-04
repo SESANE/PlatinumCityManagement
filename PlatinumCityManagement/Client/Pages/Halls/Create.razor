@@ -1,4 +1,4 @@
-﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/create/"
+﻿@page "/halls/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -9,7 +9,6 @@
 <FormComponent ButtonText="Create Hall" hall="hall" OnValidSubmit="@CreateHall" />
 
 @code {
-	[Parameter] public int cinemaBranchId { get; set; }
 	Hall hall = new Hall();
 
 	private IList<CinemaBranch>? CinemaBranches;
@@ -22,6 +21,6 @@
 	private async Task CreateHall()
 	{
 		await _client.PostAsJsonAsync(Endpoints.HallsEndpoint, hall);
-		_navManager.NavigateTo("/cinemaBranches/{cinemaBranchId:int}/halls/");
+		_navManager.NavigateTo("/halls/");
 	}
 }
