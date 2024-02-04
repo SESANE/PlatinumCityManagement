@@ -20,52 +20,45 @@
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Movie</th>
-                <th>Staff name</th>
-                <th>Customer name </th>
-                <th>Booking Type</th>
-                <th>Total Price</th>
-                <th>No. of Seats</th>
-                <th>Seat No.</th>
-                <th>Date and Time</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
-            {
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@(booking.Screening?.Movie?.Title ?? "Click View")</td>
-                    <td>@(booking.Staff?.Name ?? "Click View")</td> <!-- click on button to view names -->
-                    <td>@(booking.Customer?.Name ?? "Click View")</td> 
-                    <td>@booking.BookingType</td>
-                    <td>@booking.TotalPrice</td>
-                    <td>@booking.SeatQty</td>
-                    <td>@booking.SeatNo</td>
-                    <td>@booking.BookingDateTime.Date.ToString("dd/MM/yyyy")</td>
-                   
-     
-
-                    <td>
-                        <a href="/bookings/view/@booking.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/bookings/edit/@booking.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="(() => Delete(booking.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
+                    <th>Movie</th>
+                    <th>Staff name</th>
+                    <th>Customer name</th>
+                    <th>Booking Type</th>
+                    <th>Seat No.</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                {
+                    <tr>
+                        <td>@(booking.Screening?.Movie?.Title ?? "Click 'View'")</td>
+                        <td>@(booking.Staff?.Name ?? "Click 'View'")</td>
+                        <td>@(booking.Customer?.Name ?? "Click 'View'")</td>
+                        <td>@booking.BookingType</td>
+                        <td>@(booking.Seat?.SeatNo ?? "Click 'View'")</td>
+                        <td>
+                            <a href="/bookings/view/@booking.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/bookings/edit/@booking.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="(() => Delete(booking.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
+
 
 @code {
     private List<Booking>? Bookings;
@@ -82,7 +75,7 @@ else
         if (Bookings != null)
         {
             var booking = Bookings.First(q => q.Id == bookingId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.SeatNo}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.Seat.SeatNo}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");

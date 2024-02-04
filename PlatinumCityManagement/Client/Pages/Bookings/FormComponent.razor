@@ -57,7 +57,22 @@
                 <ValidationMessage For="@(() => booking.CustomerId)" />
             </div>
         </div>
-
+        <div class="form-group">
+            <label>Seat No: </label>
+            <div>
+                <InputSelect @bind-Value="booking.SeatId" class="form-control">
+                    <option value="">-- Select seat --</option>
+                    @if (Seats != null)
+                    {
+                        foreach (var seat in Seats)
+                        {
+                            <option value="@seat.Id">@seat.SeatNo</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => booking.CustomerId)" />
+            </div>
+        </div>
         <div class="form-group">
             <label>Booking type (Student/Adult): </label>
             <div>
@@ -65,42 +80,6 @@
                 <ValidationMessage For="@(() => booking.BookingType)" />
             </div>
         </div>
-
-        <div class="form-group">
-            <label>Total price </label>
-            <div>
-                <InputNumber @bind-Value="@booking.TotalPrice" class="form-control" />
-                <ValidationMessage For="@(() => booking.TotalPrice)" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Seat quantity </label>
-            <div>
-                <InputNumber @bind-Value="@booking.SeatQty" class="form-control" />
-                <ValidationMessage For="@(() => booking.SeatQty)" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Seat no </label>
-            <div>
-                <InputText @bind-Value="@booking.SeatNo" class="form-control" />
-                <ValidationMessage For="@(() => booking.SeatNo)" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Booking Date </label>
-            <div>
-                <InputDate @bind-Value="@booking.BookingDateTime" class="form-control" />
-                <ValidationMessage For="@(() => booking.BookingDateTime)" />
-            </div>
-        </div>
-      
-
-      
-
         <br />
         <br />
     </fieldset>
@@ -125,12 +104,16 @@
     private IList<Staff>? Staffs;
     private IList<Customer>? Customers;
     private IList<Screening>? Screenings;
+    private IList<Seat>? Seats;
+
 
     protected async override Task OnInitializedAsync()
     {
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
+        Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
+
        
 
        
