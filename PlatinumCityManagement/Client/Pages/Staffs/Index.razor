@@ -19,7 +19,7 @@
 }
 else
 {
-	<table class="table table-dark">
+	<table class="table table-dark" id="staffsTable">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -81,8 +81,14 @@ else
 		}
 	}
 
+	protected async override Task OnAfterRenderAsync(bool firstRender)
+	{
+		await js.InvokeVoidAsync("AddDataTable", "#staffsTable");
+	}
+
 	public void Dispose()
 	{
+		js.InvokeVoidAsync("DataTablesDispose", "#staffsTable");
 		_interceptor.DisposeEvent();
 	}
 }

@@ -20,6 +20,6 @@
 	private async Task EditSeat()
 	{
 		await _client.PutAsJsonAsync($"{Endpoints.SeatsEndpoint}/{seatId}", seat);
-		_navManager.NavigateTo("/seats/");
+		_navManager.NavigateTo("/cinemaBranches/");
 	}
 }

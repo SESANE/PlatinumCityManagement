@@ -29,6 +29,6 @@
 	private async Task CreateSeat()
 	{
 		await _client.PostAsJsonAsync(Endpoints.SeatsEndpoint, seat);
-		_navManager.NavigateTo("/seats/");
+		_navManager.NavigateTo("/cinemaBranches/");
 	}
 }
