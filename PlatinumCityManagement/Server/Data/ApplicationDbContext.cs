@@ -34,7 +34,6 @@ namespace PlatinumCityManagement.Server.Data
 			builder.ApplyConfiguration(new CinemaBranchSeedConfiguration());
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new MovieSeedConfiguration());
-            
 
         }
     }
