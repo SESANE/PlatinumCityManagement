@@ -23,6 +23,7 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Movie</th>
                 <th>Staff name</th>
                 <th>Customer name </th>
                 <th>Booking Type</th>
@@ -37,8 +38,9 @@ else
             @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
             {
                 <tr>
-                    <td>@(booking.Staff?.Name)</td> <!-- Handle null -->
-                    <td>@(booking.Customer?.Name)</td> <!-- Handle null-->
+                    <td>@booking.Screening.Movie.Title</td>
+                    <td>@(booking.Staff?.Name ?? "Click View")</td> <!-- Handle null -->
+                    <td>@(booking.Customer?.Name ?? "Click View")</td> <!-- Handle null-->
                     <td>@booking.BookingType</td>
                     <td>@booking.TotalPrice</td>
                     <td>@booking.SeatQty</td>

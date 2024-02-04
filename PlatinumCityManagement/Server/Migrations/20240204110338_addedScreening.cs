@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PlatinumCityManagement.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class Login : Migration
+    public partial class addedScreening : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -379,6 +379,7 @@ namespace PlatinumCityManagement.Server.Migrations
                     BookingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StaffId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    ScreeningId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -391,6 +392,12 @@ namespace PlatinumCityManagement.Server.Migrations
                         name: "FK_Bookings_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Screenings_ScreeningId",
+                        column: x => x.ScreeningId,
+                        principalTable: "Screenings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -440,9 +447,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1c8e4151-99c2-4a65-9cf1-53ade661a38e", 0, "456e2fbd-9098-43cd-b36c-adb836f3c03b", "tan@gmail.com", false, "Yan", "Teo", false, null, "TAN@GMAIL.COM", "TAN@GMAIL.COM", "AQAAAAIAAYagAAAAEF1+nJNvZY7Dr4b88TNyhVFQul27TLY3yl3WbZO1DxeY0eXAxi9cs6oQoLCRh3ddfA==", null, false, "36772b0b-8790-4973-88f1-f25ddad42bcd", false, "tan@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "dc5d3bf4-db4c-413d-b93a-444aeb26968d", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEH13g0bAiFlLRhYit2bSZzKwJAwnG6a1XwAeKlssQVyxAc/x5uI8lfkeReUvcMoZtQ==", null, false, "54ca81ab-d564-49b0-a9a7-d2c5f61bc38f", false, "admin@localhost.com" },
-                    { "c0ffdf85-d757-4286-8e84-b16117b416c8", 0, "21561c38-0d8c-416a-ba0a-dcc2c02c7bf2", "lee@gmail.com", false, "Johnny", "Lee", false, null, "LEE@GMAIL.COM", "LEE@GMAIL.COM", "AQAAAAIAAYagAAAAEIqG1wz3B5+dv2SNlTzKT2BjSP+aysjbi4NIsN+s/9ojEN//B5bnUHmC2coLvXc+9A==", null, false, "afbdb317-ce92-4b29-8487-71a050f57824", false, "lee@gmail.com" }
+                    { "1c8e4151-99c2-4a65-9cf1-53ade661a38e", 0, "47dd401a-7128-49e1-a17c-57c60655ee26", "tan@gmail.com", false, "Yan", "Teo", false, null, "TAN@GMAIL.COM", "TAN@GMAIL.COM", "AQAAAAIAAYagAAAAEA33AcuCKKm+K891m6SjLOJSZzWWesiMLBifEh9plRYhw+JLI/P5U/8T+lUMaw5ELw==", null, false, "bc0ccd0a-927f-4e2c-83eb-b6f642405612", false, "tan@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "99cf192a-512b-4890-ba29-f24c34432d4b", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEFlJrhIYqF5rvSAbyoJ48fFoTinkvbD3MYxNkcccegYyg213l+TNVhJ4jEl+32g6+A==", null, false, "647e9214-d2aa-4f85-8c0b-82b8bfe14bfe", false, "admin@localhost.com" },
+                    { "c0ffdf85-d757-4286-8e84-b16117b416c8", 0, "0b6b84eb-2a5b-4101-a80a-27a07bb61748", "lee@gmail.com", false, "Johnny", "Lee", false, null, "LEE@GMAIL.COM", "LEE@GMAIL.COM", "AQAAAAIAAYagAAAAECO+ZzgRa+tx2olbjntoemO/yc4RMX4D1+C3N07jgFQR72l51Kf7rpuSK2iuQLgMKw==", null, false, "03917f89-7870-452f-9663-9cd8253f3cfb", false, "lee@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -450,9 +457,9 @@ namespace PlatinumCityManagement.Server.Migrations
                 columns: new[] { "Id", "Address", "CreatedBy", "DateCreated", "DateUpdated", "HallQuantity", "Name", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "Tampines", "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5683), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5685), 9, "Platinum City Tampines", "System" },
-                    { 2, "Bedok", "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5688), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5689), 10, "Platinum City Bedok", "System" },
-                    { 3, "Jewel Changi Airport", "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5692), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5692), 8, "Platinum City Jewel", "System" }
+                    { 1, "Tampines", "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1946), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1949), 9, "Platinum City Tampines", "System" },
+                    { 2, "Bedok", "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1953), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1954), 10, "Platinum City Bedok", "System" },
+                    { 3, "Jewel Changi Airport", "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1957), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1957), 8, "Platinum City Jewel", "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -494,24 +501,24 @@ namespace PlatinumCityManagement.Server.Migrations
                 columns: new[] { "Id", "Capacity", "CinemaBranchId", "CreatedBy", "DateCreated", "DateUpdated", "Name", "ScreeningQuality", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, 100, 1, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6007), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6010), "1", "IMAX", "System" },
-                    { 2, 90, 2, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6013), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6014), "1", "DOLBY ATMOS", "System" },
-                    { 3, 80, 3, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6016), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6017), "1", "HD", "System" }
+                    { 1, 100, 1, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2319), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2322), "1", "IMAX", "System" },
+                    { 2, 90, 2, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2326), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2327), "1", "DOLBY ATMOS", "System" },
+                    { 3, 80, 3, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2330), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2331), "1", "HD", "System" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "Address", "CinemaBranchId", "ContactNumber", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "Name", "PerformanceRating", "Role", "UpdatedBy" },
-                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", 1, "81207097", "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5330), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(5353), "John@platinumcity.com", "John", 5, "Manager", "System" });
+                values: new object[] { 1, "499B Tampines Ave 9, #08-238, Singapore 522499", 1, "81207097", "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1489), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(1511), "John@platinumcity.com", "John", 5, "Manager", "System" });
 
             migrationBuilder.InsertData(
                 table: "Screenings",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "HallId", "MovieId", "Price", "Showtime", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6309), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6312), 1, 1, 10, new DateTime(2024, 2, 3, 20, 0, 0, 0, DateTimeKind.Unspecified), "System" },
-                    { 2, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6316), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6316), 2, 1, 12, new DateTime(2024, 2, 4, 20, 0, 0, 0, DateTimeKind.Unspecified), "System" },
-                    { 3, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6319), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6320), 3, 1, 15, new DateTime(2024, 2, 3, 18, 0, 0, 0, DateTimeKind.Unspecified), "System" }
+                    { 1, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2689), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2691), 1, 1, 10, new DateTime(2024, 2, 3, 20, 0, 0, 0, DateTimeKind.Unspecified), "System" },
+                    { 2, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2697), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2698), 2, 1, 12, new DateTime(2024, 2, 4, 20, 0, 0, 0, DateTimeKind.Unspecified), "System" },
+                    { 3, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2701), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(2702), 3, 1, 15, new DateTime(2024, 2, 3, 18, 0, 0, 0, DateTimeKind.Unspecified), "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -519,36 +526,36 @@ namespace PlatinumCityManagement.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "ScreeningId", "SeatNo", "SeatTaken", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6606), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6608), 1, "A1", false, "System" },
-                    { 2, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6611), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6612), 1, "A2", false, "System" },
-                    { 3, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6614), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6614), 1, "A3", false, "System" },
-                    { 4, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6616), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6617), 1, "A4", false, "System" },
-                    { 5, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6619), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6631), 1, "A5", false, "System" },
-                    { 6, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6650), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6651), 1, "A6", false, "System" },
-                    { 7, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6653), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6654), 1, "A7", false, "System" },
-                    { 8, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6656), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6657), 1, "A8", false, "System" },
-                    { 9, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6659), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6660), 1, "A9", true, "System" },
-                    { 10, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6662), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6662), 1, "A10", true, "System" },
-                    { 21, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6664), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6665), 2, "A1", false, "System" },
-                    { 22, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6667), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6667), 2, "A2", false, "System" },
-                    { 23, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6669), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6670), 2, "A3", false, "System" },
-                    { 24, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6672), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6673), 2, "A4", false, "System" },
-                    { 25, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6675), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6675), 2, "A5", false, "System" },
-                    { 26, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6740), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6741), 2, "A6", false, "System" },
-                    { 27, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6743), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6744), 2, "A7", false, "System" },
-                    { 28, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6746), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6747), 2, "A8", false, "System" },
-                    { 29, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6749), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6749), 2, "A9", true, "System" },
-                    { 30, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6751), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6752), 2, "A10", true, "System" },
-                    { 31, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6754), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6755), 3, "A1", false, "System" },
-                    { 32, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6757), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6757), 3, "A2", false, "System" },
-                    { 33, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6759), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6760), 3, "A3", false, "System" },
-                    { 34, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6762), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6763), 3, "A4", false, "System" },
-                    { 35, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6765), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6765), 3, "A5", false, "System" },
-                    { 36, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6767), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6768), 3, "A6", false, "System" },
-                    { 37, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6770), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6770), 3, "A7", false, "System" },
-                    { 38, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6773), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6773), 3, "A8", false, "System" },
-                    { 39, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6775), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6776), 3, "A9", true, "System" },
-                    { 40, "System", new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6778), new DateTime(2024, 2, 4, 17, 37, 33, 857, DateTimeKind.Local).AddTicks(6778), 3, "A10", true, "System" }
+                    { 1, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3143), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3146), 1, "A1", false, "System" },
+                    { 2, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3156), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3157), 1, "A2", false, "System" },
+                    { 3, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3160), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3161), 1, "A3", false, "System" },
+                    { 4, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3163), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3164), 1, "A4", false, "System" },
+                    { 5, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3166), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3180), 1, "A5", false, "System" },
+                    { 6, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3202), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3204), 1, "A6", false, "System" },
+                    { 7, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3206), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3207), 1, "A7", false, "System" },
+                    { 8, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3209), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3210), 1, "A8", false, "System" },
+                    { 9, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3212), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3213), 1, "A9", true, "System" },
+                    { 10, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3215), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3216), 1, "A10", true, "System" },
+                    { 21, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3218), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3219), 2, "A1", false, "System" },
+                    { 22, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3221), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3222), 2, "A2", false, "System" },
+                    { 23, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3224), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3225), 2, "A3", false, "System" },
+                    { 24, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3227), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3228), 2, "A4", false, "System" },
+                    { 25, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3230), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3231), 2, "A5", false, "System" },
+                    { 26, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3233), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3234), 2, "A6", false, "System" },
+                    { 27, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3236), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3237), 2, "A7", false, "System" },
+                    { 28, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3239), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3239), 2, "A8", false, "System" },
+                    { 29, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3242), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3242), 2, "A9", true, "System" },
+                    { 30, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3244), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3245), 2, "A10", true, "System" },
+                    { 31, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3247), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3248), 3, "A1", false, "System" },
+                    { 32, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3250), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3251), 3, "A2", false, "System" },
+                    { 33, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3253), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3254), 3, "A3", false, "System" },
+                    { 34, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3256), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3257), 3, "A4", false, "System" },
+                    { 35, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3259), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3259), 3, "A5", false, "System" },
+                    { 36, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3261), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3262), 3, "A6", false, "System" },
+                    { 37, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3264), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3265), 3, "A7", false, "System" },
+                    { 38, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3267), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3268), 3, "A8", false, "System" },
+                    { 39, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3270), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3271), 3, "A9", true, "System" },
+                    { 40, "System", new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3273), new DateTime(2024, 2, 4, 19, 3, 38, 131, DateTimeKind.Local).AddTicks(3274), 3, "A10", true, "System" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -594,6 +601,11 @@ namespace PlatinumCityManagement.Server.Migrations
                 name: "IX_Bookings_CustomerId",
                 table: "Bookings",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_ScreeningId",
+                table: "Bookings",
+                column: "ScreeningId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_StaffId",

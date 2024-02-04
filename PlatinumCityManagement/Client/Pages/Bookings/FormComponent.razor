@@ -6,7 +6,23 @@
     <ValidationSummary />
 
     <fieldset disabled="@Disabled">
-
+        <div class="form-group">
+            <label>Screening  </label>
+            <div>
+                <InputSelect @bind-Value="booking.ScreeningId" class="form-control">
+                    <option value="">-- Select screening --</option>
+                    @if (Screenings != null)
+                    {
+                        foreach (var screening in Screenings)
+                        {
+                            <option value="@screening.Id">@screening.Movie.Title</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => booking.ScreeningId)" />
+            </div>
+        </div>
+       
         <div class="form-group">
             <label>Staff  </label>
             <div>
@@ -108,12 +124,15 @@
 
     private IList<Staff>? Staffs;
     private IList<Customer>? Customers;
-   
+    private IList<Screening>? Screenings;
 
     protected async override Task OnInitializedAsync()
     {
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
+       
+
        
     }
 }

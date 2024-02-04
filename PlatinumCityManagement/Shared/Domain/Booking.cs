@@ -33,6 +33,8 @@ namespace PlatinumCityManagement.Shared.Domain
         public virtual Staff? Staff { get; set; }
 		public int CustomerId { get; set; }
         public virtual Customer? Customer { get; set; }
+        public int ScreeningId { get; set; }
+        public virtual Screening? Screening { get; set; }
 
 
         [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
