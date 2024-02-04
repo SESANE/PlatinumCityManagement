@@ -26,6 +26,7 @@ else
 				<th>Name</th>
 				<th>Address</th>
 				<th>Hall Quantity</th>
+				<th>Halls</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -36,6 +37,11 @@ else
 					<td>@cinemaBranch.Name</td>
 					<td>@cinemaBranch.Address</td>
 					<td>@cinemaBranch.HallQuantity</td>
+					<td>
+						<a href="/cinemaBranches/@cinemaBranch.Id/halls/" class="btn btn-primary">
+							View Halls
+						</a>
+					</td>
 					<td>
 						<a href="/cinemaBranches/view/@cinemaBranch.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>

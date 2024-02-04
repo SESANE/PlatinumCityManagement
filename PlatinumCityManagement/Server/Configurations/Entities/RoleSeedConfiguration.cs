@@ -20,6 +20,12 @@ namespace CarRentalManagement1.Server.Configurations.Entities
                     Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
                     Name = "User",
                     NormalizedName = "USER"
+                },
+                new IdentityRole
+                {
+                    Id = "b6ae90e2-c81c-444d-8aae-6fc935b403f2",
+                    Name = "Customer",
+                    NormalizedName = "CUSTOMER"
                 }
             );
         }

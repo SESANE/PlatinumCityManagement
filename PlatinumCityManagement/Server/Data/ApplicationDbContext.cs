@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using PlatinumCityManagement.Server.Configurations.Entities;
 using PlatinumCityManagement.Server.Models;
 using PlatinumCityManagement.Shared.Domain;
+using System.Reflection.Emit;
 
 namespace PlatinumCityManagement.Server.Data
 {
@@ -28,10 +29,14 @@ namespace PlatinumCityManagement.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-			builder.ApplyConfiguration(new StaffSeedConfiguration());
-			builder.ApplyConfiguration(new HallSeedConfiguration());
-			builder.ApplyConfiguration(new SeatSeedConfiguration());
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
 			builder.ApplyConfiguration(new CinemaBranchSeedConfiguration());
+			builder.ApplyConfiguration(new HallSeedConfiguration());
+			builder.ApplyConfiguration(new ScreeningSeedConfiguration());
+			builder.ApplyConfiguration(new SeatSeedConfiguration());
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new MovieSeedConfiguration());
 

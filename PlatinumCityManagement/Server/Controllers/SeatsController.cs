@@ -41,7 +41,7 @@ namespace PlatinumCityManagement.Server.Controllers
             //    return NotFound();
             //}
             //  return await _context.Seats.ToListAsync();
-            var seats = await _unitOfWork.Seats.GetAll(includes: q => q.Include(x => x.Hall));
+            var seats = await _unitOfWork.Seats.GetAll(includes: q => q.Include(x => x.Screening));
             return Ok(seats);
         }
 

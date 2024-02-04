@@ -1,14 +1,16 @@
-﻿@page "/screenings/view/{id:int}"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/view/{screeningId:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 <h3>View</h3>
 <FormComponent screening="screening" Disabled="true" />
 @code {
-	[Parameter] public int id { get; set; }
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+	[Parameter] public int screeningId { get; set; }
 	Screening? screening = new Screening();
 	protected async override Task OnParametersSetAsync()
 	{
 		screening = await
-		_client.GetFromJsonAsync<Screening>($"{Endpoints.ScreeningsEndpoint}/{id}");
+		_client.GetFromJsonAsync<Screening>($"{Endpoints.ScreeningsEndpoint}/{screeningId}");
 	}
 }

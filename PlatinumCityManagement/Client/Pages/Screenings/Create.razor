@@ -1,4 +1,4 @@
-﻿@page "/screenings/create/"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -9,6 +9,9 @@
 <FormComponent ButtonText="Create Screening" screening="screening" OnValidSubmit="@CreateScreening" />
 
 @code {
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+
 	Screening screening = new Screening();
 
 	private IList<CinemaBranch>? CinemaBranches;

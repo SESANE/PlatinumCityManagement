@@ -1,4 +1,4 @@
-﻿@page "/seats/edit/{id:int}"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/{screeningId:int}/seats/edit/{seatId:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -7,16 +7,19 @@
 <FormComponent ButtonText="Update" OnValidSubmit="EditSeat" seat="seat" />
 
 @code {
-	[Parameter] public int id { get; set; }
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+	[Parameter] public int screeningId { get; set; }
+	[Parameter] public int seatId { get; set; }
 	Seat? seat = new Seat();
 	protected async override Task OnInitializedAsync()
 	{
-		seat = await _client.GetFromJsonAsync<Seat>($"{Endpoints.SeatsEndpoint}/{id}");
+		seat = await _client.GetFromJsonAsync<Seat>($"{Endpoints.SeatsEndpoint}/{seatId}");
 	}
 
 	private async Task EditSeat()
 	{
-		await _client.PutAsJsonAsync($"{Endpoints.SeatsEndpoint}/{id}", seat);
+		await _client.PutAsJsonAsync($"{Endpoints.SeatsEndpoint}/{seatId}", seat);
 		_navManager.NavigateTo("/seats/");
 	}
 }

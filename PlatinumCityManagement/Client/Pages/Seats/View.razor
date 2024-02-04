@@ -1,14 +1,17 @@
-﻿@page "/seats/view/{id:int}"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/{screeningId:int}/seats/view/{seatId:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 <h3>View</h3>
 <FormComponent seat="seat" Disabled="true" />
 @code {
-	[Parameter] public int id { get; set; }
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
+	[Parameter] public int screeningId { get; set; }
+	[Parameter] public int seatId { get; set; }
 	Seat? seat = new Seat();
 	protected async override Task OnParametersSetAsync()
 	{
 		seat = await
-		_client.GetFromJsonAsync<Seat>($"{Endpoints.SeatsEndpoint}/{id}");
+		_client.GetFromJsonAsync<Seat>($"{Endpoints.SeatsEndpoint}/{seatId}");
 	}
 }

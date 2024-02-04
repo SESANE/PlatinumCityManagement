@@ -16,6 +16,8 @@ namespace PlatinumCityManagement.Shared.Domain
         public string? Address { get; set; }
 		[Required]
 		public int? HallQuantity { get; set; }
+		public virtual Staff? Staff { get; set; }
+
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
 			//throw new NotImplementedException();

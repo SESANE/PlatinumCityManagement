@@ -1,4 +1,4 @@
-﻿@page "/seats/"
+﻿@page "/cinemaBranches/{cinemaBranchId:int}/halls/{hallId:int}/screenings/{screeningId:int}/seats/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @inject HttpInterceptorService _interceptor
@@ -9,7 +9,7 @@
 <input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by seat no" class="form-control mb-3" />
 
 
-<a href="/seats/create" class="btn btn-secondary">
+<a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/@screeningId/seats/create" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Seat
 </a>
@@ -24,38 +24,42 @@ else
 {
 	<table class="table table-dark">
 		<thead>
-			<tr>				
-				<th>Hall</th>
-				<th>Seat no</th>
-				<th>Seat status</th>
+			<tr>
+				<th>Seat No</th>
+				<th>Seat Taken</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
             @foreach (var seat in Seats.Where(s => string.IsNullOrEmpty(searchTerm) || s.SeatNo.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
 			{
-				<tr>
-					<td>@seat.Hall.Name</td>
-					<td>@seat.SeatNo</td>
-					<td>@seat.SeatTaken</td>
-					<td>
-						<a href="/seats/view/@seat.Id" class="btn btn-primary">
-							<span class="oi oi-book"></span>
-						</a>
-						<a href="/seats/edit/@seat.Id" class="btn btn-warning">
-							<span class="oi oi-pencil"></span>
-						</a>
-						<button class="btn btn-danger" @onclick="@(()=>Delete(seat.Id))">
-							<span class="oi oi-delete"></span>
-						</button>
-					</td>
-				</tr>
+                if (seat.ScreeningId == screeningId)
+				{
+				    <tr>
+					    <td>@seat.SeatNo</td>
+					    <td>@seat.SeatTaken</td>
+					    <td>
+                            <a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/@screeningId/seats/view/@seat.Id" class="btn btn-primary">
+							    <span class="oi oi-book"></span>
+						    </a>
+                            <a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/@screeningId/seats/edit/@seat.Id" class="btn btn-warning">
+							    <span class="oi oi-pencil"></span>
+						    </a>
+						    <button class="btn btn-danger" @onclick="@(()=>Delete(seat.Id))">
+							    <span class="oi oi-delete"></span>
+						    </button>
+					    </td>
+				    </tr>
+                }
 			}
 		</tbody>
 	</table>
 }
 
 @code {
+    [Parameter] public int cinemaBranchId { get; set; }
+    [Parameter] public int hallId { get; set; }
+    [Parameter] public int screeningId { get; set; }
     private List<Seat>? Seats;
     private string searchTerm;
 
@@ -72,7 +76,7 @@ else
             var seat = Seats.FirstOrDefault(q => q.Id == seatId);
             if (seat != null)
             {
-                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {seat.SeatNo}?");
+                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete Seat:{seat.SeatNo}?");
                 if (confirm)
                 {
                     try
@@ -99,6 +103,4 @@ else
             }
         }
     }
-
-
 }

@@ -16,17 +16,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddIdentityServer()
-    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+        options.IdentityResources["openid"].UserClaims.Add("name");
+        options.ApiResources.Single().UserClaims.Add("name");
+        options.IdentityResources["openid"].UserClaims.Add("role");
+        options.ApiResources.Single().UserClaims.Add("role");
+    });
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().
+    AddNewtonsoftJson(op => op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();

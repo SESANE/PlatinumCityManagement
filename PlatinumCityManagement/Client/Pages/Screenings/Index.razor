@@ -8,7 +8,7 @@
 <h3 class="card-title">Screenings</h3>
 
 <br />
-<a href="/screenings/create" class="btn btn-secondary">
+<a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/create" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Screening
 </a>
@@ -28,41 +28,68 @@ else
 				<th>Hall</th>
 				<th>Price</th>
 				<th>Showtime</th>
+				<th>Available Seats</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var screening in Screenings)
 			{
-				<tr>
-					<td>@screening.Movie.Title</td>
-					<td>@screening.Hall.Name</td>
-					<td>@screening.Price</td>
-					<td>@screening.Showtime</td>
-					<td>
-						<a href="/screenings/view/@screening.Id" class="btn btn-primary">
-							<span class="oi oi-book"></span>
-						</a>
-						<a href="/screenings/edit/@screening.Id" class="btn btn-warning">
-							<span class="oi oi-pencil"></span>
-						</a>
-						<button class="btn btn-danger" @onclick="@(()=>Delete(screening.Id))">
-							<span class="oi oi-delete"></span>
-						</button>
-					</td>
-				</tr>
+				if (screening.HallId == hallId)
+				{
+					<tr>
+						<td>@screening.Movie.Title</td>
+						<td>@screening.Hall.Name</td>
+						<td>@screening.Price</td>
+						<td>@screening.Showtime</td>
+						<td>
+							@{
+								count = 0;
+								foreach (var seat in Seats)
+								{
+									if (seat.ScreeningId == screening.Id && seat.SeatTaken == false)
+									{
+										count += 1;
+									}
+								}
+							}
+							@count
+							<br/>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/@screening.Id/seats" class="btn btn-primary">
+								View Seats
+							</a>
+						</td>
+						<td>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/view/@screening.Id" class="btn btn-primary">
+								<span class="oi oi-book"></span>
+							</a>
+							<a href="/cinemaBranches/@cinemaBranchId/halls/@hallId/screenings/edit/@screening.Id" class="btn btn-warning">
+								<span class="oi oi-pencil"></span>
+							</a>
+							<button class="btn btn-danger" @onclick="@(()=>Delete(screening.Id))">
+								<span class="oi oi-delete"></span>
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
 }
 
 @code{
+	[Parameter] public int cinemaBranchId { get; set; }
+	[Parameter] public int hallId { get; set; }
 	private List<Screening>? Screenings;
+	private List<Seat>? Seats;
+	int count = 0;
+
 
 	protected async override Task OnInitializedAsync()
 	{
 		_interceptor.MonitorEvent();
 		Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
+		Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
 	}
 
 	async Task Delete(int screeningId)
@@ -70,7 +97,7 @@ else
 		if(Screenings != null)
 		{
 			var screening = Screenings.First(q => q.Id == screeningId);
-			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{screening.Movie.Title}?");
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {screening.Movie.Title}?");
 			if (confirm)
 			{
 				await _client.DeleteAsync($"{Endpoints.ScreeningsEndpoint}/{screeningId}");
