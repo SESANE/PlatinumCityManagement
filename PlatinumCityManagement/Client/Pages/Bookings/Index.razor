@@ -1,5 +1,5 @@
 ﻿@page "/bookings/"
-
+@inject HttpInterceptorService _interceptor
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -23,7 +23,6 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                
                 <th>Staff name</th>
                 <th>Customer name </th>
                 <th>Booking Type</th>
@@ -38,7 +37,6 @@ else
             @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
             {
                 <tr>
-                    
                     <td>@(booking.Staff?.Name ?? "N/A")</td> <!-- Handle null -->
                     <td>@(booking.Customer?.Name ?? "N/A")</td> <!-- Handle null-->
                     <td>@booking.BookingType</td>
@@ -81,36 +79,21 @@ else
     {
         if (Bookings != null)
         {
-            var booking = Bookings.FirstOrDefault(q => q.Id == bookingId);
-            if (booking != null)
+            var booking = Bookings.First(q => q.Id == bookingId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.SeatNo}?");
+            if (confirm)
             {
-                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {booking.SeatNo}?");
-                if (confirm)
-                {
-                    try
-                    {
-                        var response = await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
-                        if (response.IsSuccessStatusCode)
-                        {
-                            Bookings.Remove(booking);
-                            StateHasChanged(); //refresh the UI
-                        }
-                        else
-                        {
-                            //handle the error, maybe show a message to the user
-                            var error = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine(error);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //log or handle the exception
-                        Console.WriteLine(ex.Message);
-                    }
-                }
+                await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
+                await OnInitializedAsync();
             }
         }
     }
 
-
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
 }
+
+
+

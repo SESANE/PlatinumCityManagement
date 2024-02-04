@@ -7,7 +7,6 @@
 
     <fieldset disabled="@Disabled">
 
-       
         <div class="form-group">
             <label>Staff  </label>
             <div>
@@ -44,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            <label>Booking type: </label>
+            <label>Booking type (Student/Adult): </label>
             <div>
                 <InputText @bind-Value="@booking.BookingType" class="form-control" />
                 <ValidationMessage For="@(() => booking.BookingType)" />

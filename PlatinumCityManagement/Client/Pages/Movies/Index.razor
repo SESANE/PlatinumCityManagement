@@ -1,5 +1,5 @@
 ﻿@page "/movies/"
-
+@inject HttpInterceptorService _interceptor
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -20,46 +20,35 @@
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-               <th>Title</th>
-               <th>Rating</th>
-               <th>Duration</th>
-               <th>Description</th>
-               <th>Cast</th>
-               <th>Review</th>
-               <th>Poster</th>
-               <th>More</th>
-           </tr>
-    </thead>
-    <tbody>
-            @foreach (var movie in Movies.Where(m => string.IsNullOrEmpty(searchTerm) || m.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+    <div class="movie-card-container">
+        @foreach (var movie in Movies.Where(c => string.IsNullOrEmpty(searchTerm) || c.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
         {
-            <tr>
-                <td>@movie.Title</td>
-                <td>@movie.Rating</td>
-                    <td>@movie.Duration</td>
-                    <td>@movie.MovieDescription</td>
-                    <td>@movie.Cast</td>
-                    <td>@movie.Review</td>
-                    <td>@movie.Poster</td>
-                    <td>
-                        <a href="/movies/view/@movie.Id" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/movies/edit/@movie.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="(() => Delete(movie.Id))">
-                            <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
+            <div class="movie-card">
+                <div class="movie-media">
+                    <img src="@movie.Poster" alt="Movie Poster" />
+                </div>
+                <div class="movie-info">
+                    <div class="movie-header">
+                        <h2>@movie.Title</h2>
+                        <div class="movie-meta">
+                            <span>Duration: @movie.Duration</span>
+                            <span>Rating: @movie.Rating</span>
+                        </div>
+                    </div>
+                    <div class="movie-body">
+                        <p>@movie.MovieDescription</p>
+                        <p>Cast: @movie.Cast</p>
+                        <p>Review: @movie.Review</p>
+                    </div>
+                    <div class="movie-footer">
+                        <a href="/movies/view/@movie.Id" class="btn btn-primary">View</a>
+                        <a href="/movies/edit/@movie.Id" class="btn btn-warning">Edit</a>
+                        <button class="btn btn-danger" @onclick="(() => Delete(movie.Id))">Delete</button>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
-
+    </div>
 }
 
 @code {
@@ -76,36 +65,21 @@ else
     {
         if (Movies != null)
         {
-            var movie = Movies.FirstOrDefault(q => q.Id == movieId);
-            if (movie != null)
+            var movie = Movies.First(q => q.Id == movieId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{movie.Title}?");
+            if (confirm)
             {
-                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {movie.Title}?");
-                if (confirm)
-                {
-                    try
-                    {
-                        var response = await _client.DeleteAsync($"{Endpoints.MoviesEndpoint}/{movieId}");
-                        if (response.IsSuccessStatusCode)
-                        {
-                            Movies.Remove(movie);
-                            StateHasChanged(); // To refresh the UI
-                        }
-                        else
-                        {
-                            // Handle the error, maybe show a message to the user
-                            var error = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine(error);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log or handle the exception
-                        Console.WriteLine(ex.Message);
-                    }
-                }
+                await _client.DeleteAsync($"{Endpoints.MoviesEndpoint}/{movieId}");
+                await OnInitializedAsync();
             }
         }
     }
 
-
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
 }
+
+
+

@@ -1,5 +1,5 @@
 ﻿@page "/customers/"
-
+@inject HttpInterceptorService _interceptor
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -79,36 +79,19 @@ else
     {
         if (Customers != null)
         {
-            var customer = Customers.FirstOrDefault(q => q.Id == customerId);
-            if (customer != null)
+            var customer = Customers.First(q => q.Id == customerId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{customer.Name}?");
+            if (confirm)
             {
-                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.Name}?");
-                if (confirm)
-                {
-                    try
-                    {
-                        var response = await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
-                        if (response.IsSuccessStatusCode)
-                        {
-                            Customers.Remove(customer);
-                            StateHasChanged(); //refresh the UI
-                        }
-                        else
-                        {
-                            //handle the error, maybe show a message to the user
-                            var error = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine(error);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //log or handle the exception
-                        Console.WriteLine(ex.Message);
-                    }
-                }
+                await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerId}");
+                await OnInitializedAsync();
             }
         }
     }
 
-
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
 }
+

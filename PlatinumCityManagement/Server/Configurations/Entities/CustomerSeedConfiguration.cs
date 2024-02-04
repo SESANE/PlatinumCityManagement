@@ -18,19 +18,19 @@ namespace PlatinumCityManagement.Server.Configurations.Entities
                       Address = "707 Tampines Street 71 #09-20, 520707",
                       EmailAddress = "lee@gmail.com",
                       ContactNumber = "89220951",
-                      MembershipType = "Premium",
+                      MembershipType = "Platinum",
                       Points = 133
 
                   },
                    new Customer
                    {
                        Id = 2,
-                       Name = "Yan Teo",
+                       Name = "Tan",
                        DOB = new DateTime(2002, 03, 15),
                        Address = "707 Geylang Street 71 #02-20, 520707",
                        EmailAddress = "tan@gmail.com",
                        ContactNumber = "89235451",
-                       MembershipType = "Premium",
+                       MembershipType = "Platinum",
                        Points = 192
 
                    }
