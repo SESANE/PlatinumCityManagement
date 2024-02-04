@@ -7,18 +7,22 @@
         <a class="nav-item nav-link" href="movies">
             Movies
         </a>
-        <a class="nav-item nav-link" href="staffs">
-            Staffs
+        <a class="nav-item nav-link" href="contactus">
+            Contact Us
         </a>
-        <a class="nav-item nav-link" href="cinemaBranches">
-            Cinema Branches
-        </a>
-        <a class="nav-item nav-link" href="customers">
-            Customers
-        </a>
-        <a class="nav-item nav-link" href="bookings">
-            Book Now
-        </a>
+        <AuthorizeView Roles="Administrator">
+            <Authorized>
+                <a class="nav-item nav-link" href="staffs">
+                    Staffs
+                </a>
+                <a class="nav-item nav-link" href="cinemaBranches">
+                    Cinema Branches
+                </a>
+                <a class="nav-item nav-link" href="customers">
+                    Customers
+                </a>
+            </Authorized>
+        </AuthorizeView>
         <div class="auth-links">
             <LoginDisplay />
         </div>

@@ -37,8 +37,8 @@ else
             @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
             {
                 <tr>
-                    <td>@(booking.Staff?.Name ?? "N/A")</td> <!-- Handle null -->
-                    <td>@(booking.Customer?.Name ?? "N/A")</td> <!-- Handle null-->
+                    <td>@(booking.Staff?.Name)</td> <!-- Handle null -->
+                    <td>@(booking.Customer?.Name)</td> <!-- Handle null-->
                     <td>@booking.BookingType</td>
                     <td>@booking.TotalPrice</td>
                     <td>@booking.SeatQty</td>
