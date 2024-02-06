@@ -1,0 +1,66 @@
+﻿@page "/customers/movies/"
+@inject HttpInterceptorService _interceptor
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Movies</h3>
+<input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by Title" class="form-control mb-3" />
+
+@if (Movies == null)
+{
+<div class="alert alert-info">Loading Movies..</div>
+}
+else
+{
+    <div class="movie-card-container">
+        @foreach (var movie in Movies.Where(c => string.IsNullOrEmpty(searchTerm) || c.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+        {
+            <div class="movie-card">
+                <div class="movie-media">
+                    <img src="@movie.Poster" alt="Movie Poster" />
+                </div>
+                <div class="movie-info">
+                    <div class="movie-header">
+                        <h2>@movie.Title</h2>
+                        <div class="movie-meta">
+                            <span>Duration: @movie.Duration</span>
+                            <span>Rating: @movie.Rating</span>
+                        </div>
+                    </div>
+                    <div class="movie-body">
+                        <p>@movie.MovieDescription</p>
+                        <p>Cast: @movie.Cast</p>
+                        <p>Review: @movie.Review</p>
+                    </div>
+                    <div class="movie-footer">
+                        <a href="/movies/view/@movie.Id" class="btn btn-primary">View</a>
+                        <a href="/customers/bookings" class="btn btn-warning">Book</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Movie>? Movies;
+    private string searchTerm;
+
+    protected async override Task OnInitializedAsync()
+
+    {
+        Movies = await _client.GetFromJsonAsync<List<Movie>>($"{Endpoints.MoviesEndpoint}");
+    }
+
+    
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+}
+
+
+

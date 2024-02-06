@@ -64,6 +64,19 @@ else
     {
         Bookings = await _client.GetFromJsonAsync<List<Booking>>($"{Endpoints.BookingsEndpoint}");
     }
+    async Task Delete(int bookingId)
+    {
+        if (Bookings != null)
+        {
+            var booking = Bookings.First(q => q.Id == bookingId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.SeatId}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
 
     public void Dispose()
     {
