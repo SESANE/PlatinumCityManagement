@@ -1,9 +1,9 @@
 ﻿@using PlatinumCityManagement.Client.Components
-@page "/bookings/view/{id:int}"
+@page "/staffs/bookings/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 <h3>View Bookings</h3>
-<FormComponent booking="booking" Disabled="true" />
+<FormComponentStaff booking="booking" Disabled="true" />
 @code {
 	[Parameter] public int id { get; set; }
 	Booking? booking = new Booking();

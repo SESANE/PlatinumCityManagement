@@ -64,7 +64,7 @@
                     <option value="">-- Select seat --</option>
                     @if (Seats != null)
                     {
-                        foreach (var seat in Seats)
+                        foreach (var seat in Seats.Where(c => c.ScreeningId == booking.ScreeningId))
                         {
                             <option value="@seat.Id">@seat.SeatNo</option>
                         }
@@ -90,7 +90,7 @@
             @ButtonText
         </button>
     }
-    <BackToList Target="bookings" />
+    <BackToList Target="staffs/bookings" />
 
 </EditForm>
 
@@ -113,10 +113,6 @@
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
         Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
-
-       
-
-       
     }
 }
 

@@ -1,0 +1,88 @@
+﻿@page "/staffs/bookings/"
+@inject HttpInterceptorService _interceptor
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Bookings</h3>
+<input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by booking type" class="form-control mb-3" />
+
+
+@if (Bookings == null)
+{
+    <div class="alert alert-info">Loading Bookings..</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Staff name</th>
+                    <th>Customer name</th>
+                    <th>Booking Type</th>
+                    <th>Seat No.</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                {
+                    <tr>
+                        <td>@(booking.Screening?.Movie?.Title ?? "Click 'View'")</td>
+                        <td>@(booking.Staff?.Name ?? "Click 'View'")</td>
+                        <td>@(booking.Customer?.Name ?? "Click 'View'")</td>
+                        <td>@booking.BookingType</td>
+                        <td>@(booking.Seat?.SeatNo ?? "Click 'View'")</td>
+                        <td>
+                            <a href="staffs/bookings/view/@booking.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="staffs/bookings/edit/@booking.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="(() => Delete(booking.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@code {
+    private List<Booking>? Bookings;
+    private string searchTerm;
+
+    protected async override Task OnInitializedAsync()
+
+    {
+        Bookings = await _client.GetFromJsonAsync<List<Booking>>($"{Endpoints.BookingsEndpoint}");
+    }
+
+    async Task Delete(int bookingId)
+    {
+        if (Bookings != null)
+        {
+            var booking = Bookings.First(q => q.Id == bookingId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.Seat.SeatNo}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+}
+
+
+

@@ -1,5 +1,5 @@
 ﻿@using PlatinumCityManagement.Client.Components
-@page "/bookings/create/" 
+@page "/customers/bookings/create/" 
 @inject HttpClient _client 
 @inject NavigationManager _navManager
 
@@ -7,7 +7,7 @@
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Booking" OnValidSubmit="CreateBooking" booking="booking" />
+<FormComponentCustomer ButtonText="Create Booking" OnValidSubmit="CreateBooking" booking="booking" />
 
 
 @code {
@@ -15,19 +15,20 @@
 
     private IList<Staff>? Staffs;
     private IList<Customer>? Customers;
-    
+
 
     protected async override Task OnInitializedAsync()
     {
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
-      
+
     }
 
     private async Task CreateBooking()
     {
+        booking.StaffId = 1;
         await _client.PostAsJsonAsync(Endpoints.BookingsEndpoint, booking);
-        _navManager.NavigateTo("/bookings/");
+        _navManager.NavigateTo("/customers/bookings/");
     }
 
 }

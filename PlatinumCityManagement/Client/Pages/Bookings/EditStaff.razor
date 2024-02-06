@@ -1,11 +1,11 @@
 ﻿@using PlatinumCityManagement.Client.Components
-@page "/bookings/edit/{id:int}"
+@page "/staffs/bookings/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
 <h3>Edit Booking</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditBooking" booking="booking" />
+<FormComponentStaff ButtonText="Update" OnValidSubmit="EditBooking" booking="booking" />
 
 @code {
     [Parameter] public int id { get; set; }
@@ -19,7 +19,7 @@
     async Task EditBooking()
     {
         await _client.PutAsJsonAsync($"{Endpoints.BookingsEndpoint}/{id}", booking);
-        _navManager.NavigateTo("/bookings/");
+        _navManager.NavigateTo("/staffs/bookings/");
     }
 
 }

@@ -1,4 +1,4 @@
-﻿@page "/bookings/"
+﻿@page "/customers/bookings/"
 @inject HttpInterceptorService _interceptor
 @inject HttpClient _client
 @inject IJSRuntime js
@@ -7,7 +7,7 @@
 <h3 class="card-title">Bookings</h3>
 <input type="text" @bind-value="searchTerm" @bind-value:event="oninput" placeholder="Search by booking type" class="form-control mb-3" />
 
-<a href="/bookings/create" class="btn btn-secondary">
+<a href="customers/bookings/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
     Create New Bookings
 </a>
@@ -25,7 +25,6 @@ else
             <thead>
                 <tr>
                     <th>Movie</th>
-                    <th>Staff name</th>
                     <th>Customer name</th>
                     <th>Booking Type</th>
                     <th>Seat No.</th>
@@ -37,20 +36,16 @@ else
                 {
                     <tr>
                         <td>@(booking.Screening?.Movie?.Title ?? "Click 'View'")</td>
-                        <td>@(booking.Staff?.Name ?? "Click 'View'")</td>
                         <td>@(booking.Customer?.Name ?? "Click 'View'")</td>
                         <td>@booking.BookingType</td>
                         <td>@(booking.Seat?.SeatNo ?? "Click 'View'")</td>
                         <td>
-                            <a href="/bookings/view/@booking.Id" class="btn btn-primary">
+                            <a href="customers/bookings/view/@booking.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/bookings/edit/@booking.Id" class="btn btn-warning">
+                            <a href="customers/bookings/edit/@booking.Id" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
-                            <button class="btn btn-danger" @onclick="(() => Delete(booking.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
                         </td>
                     </tr>
                 }
@@ -68,20 +63,6 @@ else
 
     {
         Bookings = await _client.GetFromJsonAsync<List<Booking>>($"{Endpoints.BookingsEndpoint}");
-    }
-
-    async Task Delete(int bookingId)
-    {
-        if (Bookings != null)
-        {
-            var booking = Bookings.First(q => q.Id == bookingId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete{booking.Seat.SeatNo}?");
-            if (confirm)
-            {
-                await _client.DeleteAsync($"{Endpoints.BookingsEndpoint}/{bookingId}");
-                await OnInitializedAsync();
-            }
-        }
     }
 
     public void Dispose()
