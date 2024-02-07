@@ -1,5 +1,7 @@
 ﻿@using PlatinumCityManagement.Client.Components
 @inject HttpClient _client
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 
 <EditForm Model="@booking" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -27,6 +29,7 @@
         <div class="form-group">
             <label>Customer: </label>
             <div>
+
                 <InputSelect @bind-Value="booking.CustomerId" class="form-control">
                     <option value="">-- Select Customer --</option>
                     @if (Customers != null)
@@ -88,14 +91,37 @@
     private IList<Customer>? Customers;
     private IList<Screening>? Screenings;
     private IList<Seat>? Seats;
-
-
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
         Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
-    }
-}
+        // ... your existing code to fetch Staffs, Screenings, Seats ...
 
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userEmail = authState.User.Identity.Name;
+
+        // If userEmail is null, then the user is likely not authenticated.
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            throw new InvalidOperationException("User is not authenticated.");
+        }
+
+        var allCustomers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        Customers = allCustomers.Where(c => c.EmailAddress.Equals(userEmail, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        // If Customers list is empty or null, it means no customer record is associated with the logged-in user.
+        if (Customers == null || !Customers.Any())
+        {
+            throw new InvalidOperationException("No customer record found for the logged-in user.");
+        }
+
+        // Assuming booking is a new instance if creating a new booking
+        if (booking == null)
+        {
+            booking = new Booking { CustomerId = Customers.First().Id };
+        }
+    }
+
+
+    }
