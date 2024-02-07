@@ -29,7 +29,13 @@ namespace PlatinumCityManagement.Server.Controllers
             {
                 return NotFound();
             }
-            return await _context.Bookings.ToListAsync();
+            return await _context.Bookings
+                .Include(b => b.Screening)
+                    .ThenInclude(s => s.Movie)
+                .Include(b => b.Customer)
+                .Include(b => b.Seat)
+                .Include(b => b.Staff)
+                .ToListAsync();
         }
 
         // GET: api/Bookings/5
@@ -49,6 +55,7 @@ namespace PlatinumCityManagement.Server.Controllers
 
             return Booking;
         }
+        
 
         // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

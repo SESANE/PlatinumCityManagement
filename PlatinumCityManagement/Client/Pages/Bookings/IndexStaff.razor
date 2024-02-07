@@ -19,10 +19,10 @@ else
             <thead>
                 <tr>
                     <th>Movie</th>
-                    <th>Staff name</th>
-                    <th>Customer name</th>
+                    <th>Customer</th>
                     <th>Booking Type</th>
                     <th>Seat No.</th>
+                    <th>Staff</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -30,11 +30,12 @@ else
                 @foreach (var booking in Bookings.Where(b => string.IsNullOrEmpty(searchTerm) || b.BookingType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
                 {
                     <tr>
-                        <td>@(booking.Screening?.Movie?.Title ?? "Click 'View'")</td>
-                        <td>@(booking.Staff?.Name ?? "Click 'View'")</td>
-                        <td>@(booking.Customer?.Name ?? "Click 'View'")</td>
+                        <td>@(booking.Screening?.Movie?.Title ?? "N/A")</td>
+                        <td>@(booking.Customer?.Name ?? "N/A")</td>
                         <td>@booking.BookingType</td>
-                        <td>@(booking.Seat?.SeatNo ?? "Click 'View'")</td>
+                        <td>@(booking.Seat?.SeatNo ?? "N/A")</td>
+                        <td>@(booking.Staff?.Name ?? "N/A")</td>
+
                         <td>
                             <a href="staffs/bookings/view/@booking.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
@@ -57,11 +58,17 @@ else
 @code {
     private List<Booking>? Bookings;
     private string searchTerm;
-
+    private IList<Staff>? Staffs;
+    private IList<Customer>? Customers;
+    private IList<Screening>? Screenings;
+    private IList<Seat>? Seats;
     protected async override Task OnInitializedAsync()
 
     {
-        Bookings = await _client.GetFromJsonAsync<List<Booking>>($"{Endpoints.BookingsEndpoint}");
+        {
+            Bookings = await _client.GetFromJsonAsync<List<Booking>>(
+                $"{Endpoints.BookingsEndpoint}?include=Screening,Seat,Customer,Staff");
+        }
     }
 
     async Task Delete(int bookingId)

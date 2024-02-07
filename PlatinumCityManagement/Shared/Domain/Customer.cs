@@ -35,5 +35,6 @@ namespace PlatinumCityManagement.Shared.Domain
         [RegularExpression("Basic|Silver|Gold|Platinum", ErrorMessage = "Invalid Membership Type")]
         public string? MembershipType { get; set; }
 
+        public virtual Booking? Booking { get; set; }
     }
 }

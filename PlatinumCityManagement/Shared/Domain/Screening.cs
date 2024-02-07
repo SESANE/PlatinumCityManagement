@@ -15,8 +15,9 @@ namespace PlatinumCityManagement.Shared.Domain
         public virtual Hall? Hall { get; set; }
 		public int? MovieId { get; set; }
 		public virtual Movie? Movie { get; set; }
+        public virtual Booking? Booking { get; set; }
 
-		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
 			if (Showtime <= DateTime.Now)
 			{

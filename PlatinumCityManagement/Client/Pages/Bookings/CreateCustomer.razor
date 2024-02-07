@@ -15,12 +15,16 @@
 
     private IList<Staff>? Staffs;
     private IList<Customer>? Customers;
+    private IList<Screening>? Screenings;
+    private IList<Seat>? Seats;
 
 
     protected async override Task OnInitializedAsync()
     {
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        Screenings = await _client.GetFromJsonAsync<List<Screening>>($"{Endpoints.ScreeningsEndpoint}");
+        Seats = await _client.GetFromJsonAsync<List<Seat>>($"{Endpoints.SeatsEndpoint}");
 
     }
 

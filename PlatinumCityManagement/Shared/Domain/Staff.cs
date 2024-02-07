@@ -25,6 +25,8 @@ namespace PlatinumCityManagement.Shared.Domain
         public string? Role { get; set; }
         public int PerformanceRating { get; set; }
 		public int CinemaBranchId {  get; set; }
-		public virtual CinemaBranch? CinemaBranch { get; set; } 
+		public virtual CinemaBranch? CinemaBranch { get; set; }
+        public virtual Booking? Booking { get; set; }
+
     }
 }
